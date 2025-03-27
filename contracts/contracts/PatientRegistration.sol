@@ -70,6 +70,12 @@ contract PatientRegistration {
         return keccak256(abi.encodePacked(_password)) == keccak256(abi.encodePacked(patients[_hhNumber].password));
     }
 
+    // Add a funtion to validate user address
+    function validateAddress(address _walletAddress, string memory _hhNumber) external view returns (bool) {
+        require(isPatientRegistered[_hhNumber], "Patient not registered");
+        return _walletAddress == patients[_hhNumber].walletAddress;
+    }
+
     function getPatientDetails(string memory _hhNumber) external view returns (
     address walletAddress,
     string memory name,

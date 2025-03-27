@@ -1,34 +1,93 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
+import { clearUser } from "../redux/user/userSlice";
 
 const Header = () => {
-  return (
-    <header className="flex mx-auto justify-between items-center max-w-[1300px] py-4 ">
-      <nav class="hidden sm:inline-block">
-        <ul class="flex gap-3 md:gap-5 lg:gap-10">
-          <li class="uppercase font-bold text-xs text-white">
-            <Link href="#">ABOUT</Link>
-          </li>
-          <li class="uppercase font-bold text-xs text-white">
-            <Link href="#">SERVICES</Link>
-          </li>
-          <li class="uppercase font-bold text-xs text-white">
-            <Link href="#">TECHNOLOGIES</Link>
-          </li>
-          <li class="uppercase font-bold text-xs text-white">
-            <Link href="#">HOW TO</Link>
-          </li>
-        </ul>
-      </nav>
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-      <ul class="hidden sm:flex gap-3 md:gap-5 lg:gap-9">
-        <li className="uppercase font-bold text-xs text-white border-2 border-white rounded-[40px] py-1 px-3  md:py-2 lg:py-4 md:px-4 lg:px-9 ">
-            <Link>Contact Us</Link>
-        </li>
-        <li className="uppercase font-bold text-xs rounded-[40px] py-1 px-3 md:py-2 lg:py-4 md:px-4 lg:px-9 text-[#302c42]  bg-gradient-to-r from-[#8176AF] to-[#C0B7E8]">
-            <Link to="/patient-register">Register</Link>
-        </li>
-      </ul>
-    </header>
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
+  const handleLogout = () => {
+    dispatch(clearUser());
+    localStorage.clear();
+    navigate("/");
+  };
+
+  const hhNumber = localStorage.getItem("hhNumber");
+
+  return (
+    <header className="bg-white text-black flex justify-between items-center shadow-md px-6 py-4">
+  <h1 className="text-2xl font-bold text-blue-600">MyBrand</h1>
+  <nav>
+    <ul className="flex items-center gap-6">
+      <li>
+        <Link
+          to="/"
+          className="text-black hover:text-blue-600 transition duration-300"
+        >
+          Home
+        </Link>
+      </li>
+      {!isLoggedIn ? (
+        <>
+          <li>
+            <Link
+              to="/about"
+              className="text-black hover:text-blue-600 transition duration-300"
+            >
+              About
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/services"
+              className="text-black hover:text-blue-600 transition duration-300"
+            >
+              Services
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/contact"
+              className="text-black hover:text-blue-600 transition duration-300"
+            >
+              Contact
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/register"
+              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300"
+            >
+              Get Started
+            </Link>
+          </li>
+        </>
+      ) : (
+        <>
+          <li>
+            <Link
+              to={`/patient/${hhNumber}`}
+              className="text-black hover:text-blue-600 transition duration-300"
+            >
+              Dashboard
+            </Link>
+          </li>
+          <li>
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 px-4 py-2 rounded-md hover:bg-red-700 transition duration-300"
+            >
+              Logout
+            </button>
+          </li>
+        </>
+      )}
+    </ul>
+  </nav>
+</header>
   );
 };
 
