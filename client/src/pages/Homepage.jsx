@@ -7,7 +7,7 @@ const HomePage = () => {
   return (
     <div className="bg-gray-50 min-h-screen">
       {/* Hero Section */}
-      <section className="bg-blue-600 text-white py-24 px-6 md:px-12">
+      <section className="bg-teal-600 text-white py-24 px-6 md:px-12">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold leading-tight">
             Blockchain-Powered EMR
@@ -15,7 +15,7 @@ const HomePage = () => {
           <p className="text-lg md:text-2xl mt-4 mb-8">
             Secure, Transparent, and Accessible Medical Records Anytime, Anywhere
           </p>
-          <button className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-full font-semibold transition shadow-lg">
+          <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-full font-semibold transition shadow-lg">
             Get Started
           </button>
         </div>
@@ -26,29 +26,35 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
           {[
             {
-              icon: <FaShieldAlt className="text-5xl text-blue-500" />,
+              icon: <FaShieldAlt className="text-5xl text-teal-500" />,
               title: "Immutable Security",
-              desc: "Your records are tamper-proof and securely stored using blockchain."
+              desc: "Your records are tamper-proof and securely stored using blockchain.",
+              img: "https://source.unsplash.com/400x300/?security,blockchain"
             },
             {
-              icon: <FaLock className="text-5xl text-green-500" />,
+              icon: <FaLock className="text-5xl text-orange-500" />,
               title: "Privacy First",
-              desc: "Only authorized users can access the medical data."
+              desc: "Only authorized users can access the medical data.",
+              img: "https://source.unsplash.com/400x300/?privacy,lock"
             },
             {
               icon: <FaUserMd className="text-5xl text-purple-500" />,
               title: "Seamless Accessibility",
-              desc: "Patients and doctors can access records globally."
+              desc: "Patients and doctors can access records globally.",
+              img: "https://source.unsplash.com/400x300/?doctor,healthcare"
             }
           ].map((item, index) => (
             <motion.div
               key={index}
               whileHover={{ scale: 1.05 }}
-              className="bg-white shadow-xl rounded-2xl p-8 text-center transition duration-300 hover:shadow-2xl"
+              className="bg-white shadow-lg rounded-2xl overflow-hidden transition duration-300 hover:shadow-2xl"
             >
-              {item.icon}
-              <h2 className="text-2xl font-bold mt-4">{item.title}</h2>
-              <p className="text-gray-600 mt-2">{item.desc}</p>
+              <img src={item.img} alt={item.title} className="w-full h-48 object-cover" />
+              <div className="p-6 text-center">
+                {item.icon}
+                <h2 className="text-2xl font-bold mt-4">{item.title}</h2>
+                <p className="text-gray-600 mt-2">{item.desc}</p>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -61,29 +67,35 @@ const HomePage = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {[
               {
-                icon: <FaFileMedical className="text-5xl text-blue-600" />,
+                icon: <FaFileMedical className="text-5xl text-teal-600" />,
                 title: "Record Creation",
-                desc: "Doctors create medical records securely stored on the blockchain."
+                desc: "Doctors create medical records securely stored on the blockchain.",
+                img: "https://source.unsplash.com/400x300/?medical,records"
               },
               {
-                icon: <FaLock className="text-5xl text-green-600" />,
+                icon: <FaLock className="text-5xl text-orange-600" />,
                 title: "Encrypted Storage",
-                desc: "Records are encrypted and only accessible to authorized users."
+                desc: "Records are encrypted and only accessible to authorized users.",
+                img: "https://source.unsplash.com/400x300/?encryption,security"
               },
               {
                 icon: <FaUserMd className="text-5xl text-purple-600" />,
                 title: "Global Access",
-                desc: "Patients and providers access records using private keys."
+                desc: "Patients and providers access records using private keys.",
+                img: "https://source.unsplash.com/400x300/?global,healthcare"
               }
             ].map((item, index) => (
               <motion.div
                 key={index}
                 whileHover={{ scale: 1.05 }}
-                className="bg-gray-100 rounded-2xl shadow-lg p-8 text-center transition duration-300 hover:shadow-xl"
+                className="bg-gray-100 rounded-2xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl"
               >
-                {item.icon}
-                <h3 className="text-2xl font-bold mt-4">{item.title}</h3>
-                <p className="text-gray-600 mt-2">{item.desc}</p>
+                <img src={item.img} alt={item.title} className="w-full h-48 object-cover" />
+                <div className="p-6 text-center">
+                  {item.icon}
+                  <h3 className="text-2xl font-bold mt-4">{item.title}</h3>
+                  <p className="text-gray-600 mt-2">{item.desc}</p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -99,12 +111,14 @@ const HomePage = () => {
               {
                 name: "Dr. Aisha Khan",
                 role: "Cardiologist",
-                quote: "The blockchain-powered EMR ensures complete data integrity and easy accessibility."
+                quote: "The blockchain-powered EMR ensures complete data integrity and easy accessibility.",
+                img: "https://source.unsplash.com/150x150/?doctor"
               },
               {
                 name: "Rohan Sharma",
                 role: "Patient",
-                quote: "I feel secure knowing my medical data is private and protected."
+                quote: "I feel secure knowing my medical data is private and protected.",
+                img: "https://source.unsplash.com/150x150/?patient"
               }
             ].map((item, index) => (
               <motion.div
@@ -112,6 +126,11 @@ const HomePage = () => {
                 whileHover={{ scale: 1.05 }}
                 className="bg-white rounded-2xl shadow-lg p-8 transition duration-300 hover:shadow-2xl"
               >
+                <img
+                  src={item.img}
+                  alt={item.name}
+                  className="w-16 h-16 rounded-full mx-auto mb-4"
+                />
                 <p className="text-gray-600 italic mb-4">"{item.quote}"</p>
                 <h4 className="font-bold">{item.name}</h4>
                 <span className="text-gray-500">{item.role}</span>
@@ -133,9 +152,9 @@ const HomePage = () => {
           <div>
             <h3 className="text-xl font-bold mb-4">Links</h3>
             <ul className="text-gray-400 space-y-2">
-              <li><a href="#" className="hover:text-green-500">Home</a></li>
-              <li><a href="#" className="hover:text-green-500">Features</a></li>
-              <li><a href="#" className="hover:text-green-500">Contact</a></li>
+              <li><a href="#" className="hover:text-orange-500">Home</a></li>
+              <li><a href="#" className="hover:text-orange-500">Features</a></li>
+              <li><a href="#" className="hover:text-orange-500">Contact</a></li>
             </ul>
           </div>
           <div>
