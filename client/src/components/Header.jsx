@@ -54,6 +54,15 @@ const Header = () => {
               </Link>
             </li>
 
+            <li>
+              <Link
+                to="/hospitals"
+                className="hover:text-yellow-400 transition duration-300"
+              >
+                Hospitals
+              </Link>
+            </li>
+
             {!isLoggedIn ? (
               <>
                 <li>
