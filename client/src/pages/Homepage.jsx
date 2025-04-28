@@ -7,7 +7,7 @@ const HomePage = () => {
   return (
     <div className="bg-gray-50 min-h-screen">
       {/* Hero Section */}
-      <section className="bg-teal-600 text-white py-24 px-6 md:px-12">
+      <section className="bg-blue-100 text-black py-24 px-6 md:px-12">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold leading-tight">
             Blockchain-Powered EMR
@@ -15,7 +15,7 @@ const HomePage = () => {
           <p className="text-lg md:text-2xl mt-4 mb-8">
             Secure, Transparent, and Accessible Medical Records Anytime, Anywhere
           </p>
-          <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-full font-semibold transition shadow-lg">
+          <button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg cursor-pointer font-semibold transition shadow-lg">
             Get Started
           </button>
         </div>
@@ -29,19 +29,19 @@ const HomePage = () => {
               icon: <FaShieldAlt className="text-5xl text-teal-500" />,
               title: "Immutable Security",
               desc: "Your records are tamper-proof and securely stored using blockchain.",
-              img: "https://source.unsplash.com/400x300/?security,blockchain"
+              img: "https://img.freepik.com/premium-vector/blockchain-cybersecurity-isolated-cartoon-vector-illustrations_107173-21524.jpg?w=740"
             },
             {
               icon: <FaLock className="text-5xl text-orange-500" />,
               title: "Privacy First",
               desc: "Only authorized users can access the medical data.",
-              img: "https://source.unsplash.com/400x300/?privacy,lock"
+              img: "https://img.freepik.com/free-vector/protected-personal-data-laptop-isometric-illustration-with-colorful-elements-white_1284-63284.jpg?t=st=1743154971~exp=1743158571~hmac=5da452a4c7a1a06cdbcc3113104723b42bddea006c9dbfa26031a3ba0a617cf1&w=740"
             },
             {
               icon: <FaUserMd className="text-5xl text-purple-500" />,
               title: "Seamless Accessibility",
               desc: "Patients and doctors can access records globally.",
-              img: "https://source.unsplash.com/400x300/?doctor,healthcare"
+              img: "https://img.freepik.com/free-vector/electronic-accessibility-concept-illustration_114360-20320.jpg?t=st=1743155020~exp=1743158620~hmac=50351c4dc4db6b3250fc9f52418fecf1177a4bf798e3ea60a8e5123486ef5d60&w=740"
             }
           ].map((item, index) => (
             <motion.div
@@ -49,7 +49,7 @@ const HomePage = () => {
               whileHover={{ scale: 1.05 }}
               className="bg-white shadow-lg rounded-2xl overflow-hidden transition duration-300 hover:shadow-2xl"
             >
-              <img src={item.img} alt={item.title} className="w-full h-48 object-cover" />
+              <img src={item.img} alt={item.title} className="w-full h-48 object-contain" />
               <div className="p-6 text-center">
                 {item.icon}
                 <h2 className="text-2xl font-bold mt-4">{item.title}</h2>

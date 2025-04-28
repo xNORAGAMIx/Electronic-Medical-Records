@@ -14,6 +14,7 @@ import storage from "redux-persist/lib/storage";
 import userReducer from "./user/userSlice";
 import blockchainReducer from "./contract/blockchainSlice";
 import uploadReducer from "./contract/uploadSlice";
+import doctorReducer from "./contract/doctorSlice";
 
 const persistConfig = {
   key: "root",
@@ -29,12 +30,14 @@ const store = configureStore({
     blockchain: blockchainReducer,
     user: persistedUserReducer,
     upload: uploadReducer,
+    doctor: doctorReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [
           "blockchain/setBlockchainState",
+          "doctor/setDoctorState",
           "upload/setUploadState",
           FLUSH,
           REHYDRATE,
@@ -47,6 +50,9 @@ const store = configureStore({
           "blockchain.contract",
           "blockchain.provider",
           "blockchain.account",
+          "doctor.contract",
+          "doctor.provider",
+          "doctor.account",
           "upload.contract",
           "upload.provider",
           "upload.account",

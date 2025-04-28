@@ -1,43 +1,38 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import {
   connectToBlockchain,
-  clearBlockchainState,
-} from "../../redux/contract/blockchainSlice";
+  clearDoctorState,
+} from "../../redux/contract/doctorSlice";
 
-import PatientRegistration from "../../constants/PatientRegistration.json";
+import DoctorRegistration from "../../constants/DoctorRegistration.json";
 import { useDispatch, useSelector } from "react-redux";
 
-import { PATIENT_CONTRACT_ADDRESS, PRIVATE_KEY } from "../../constants/Values";
+import { DOCTOR_CONTRACT_ADDRESS, PRIVATE_KEY } from "../../constants/Values";
 
 import loginImage from "../../../public/5053643.jpg";
 
-const contractABI = PatientRegistration.abi;
-const contractAddress = PATIENT_CONTRACT_ADDRESS;
+const contractABI = DoctorRegistration.abi;
+const contractAddress = DOCTOR_CONTRACT_ADDRESS;
 const privateKey = PRIVATE_KEY;
 
 const Registration = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // register input states
   const [name, setName] = useState("");
-  const [dob, setDob] = useState("");
-  const [bloodGroup, setBloodGroup] = useState("");
-  const [gender, setGender] = useState("");
-  const [address, setAddress] = useState("");
+  const [specialization, setSpecialization] = useState("");
+  const [hospital, setHospital] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [email, setEmail] = useState("");
   const [hhNumber, setHHNumber] = useState("");
 
-  const contract = useSelector((state) => state.blockchain.contract);
-  const loading = useSelector((state) => state.blockchain.loading);
-  const account = useSelector((state) => state.blockchain.account);
+  const { account, contract, loading } = useSelector((state) => state.doctor);
 
-  //register loader
+  // register loader
   const [waiter, setWaiter] = useState(false);
 
   // connect to network
@@ -48,7 +43,7 @@ const Registration = () => {
   // clear state when component unmounts
   useEffect(() => {
     return () => {
-      dispatch(clearBlockchainState());
+      dispatch(clearDoctorState());
     };
   }, [dispatch]);
 
@@ -63,20 +58,14 @@ const Registration = () => {
 
     if (
       !account ||
-      !name ||
-      !dob ||
-      !bloodGroup ||
-      !gender ||
-      !address ||
+      !hospital | !name ||
+      !specialization ||
       !password ||
       !email ||
       !hhNumber ||
       !confirmPassword
     ) {
       toast.error("Please fill in all the required fields.");
-      // alert(
-      //   "You have missing input fields. Please fill in all the required fields."
-      // );
       return;
     }
 
@@ -98,12 +87,6 @@ const Registration = () => {
       return;
     }
 
-    const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-    if (!datePattern.test(dob)) {
-      toast.error("Please enter Date of Birth in the format dd/mm/yyyy");
-      return;
-    }
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       toast.error("Please enter a valid email address.");
@@ -112,31 +95,28 @@ const Registration = () => {
 
     try {
       setWaiter(true);
-      const isRegPat = await contract.isRegisteredPatient(hhNumber);
-      // await isRegPat.wait();
+      const isRegDoc = await contract.isDoctorRegistered(hhNumber);
 
-      if (isRegPat) {
-        toast.error("Patient already exists");
+      if (isRegDoc) {
+        toast.error("Doctor already exists");
         return;
       }
 
-      const tx = await contract.registerPatient(
+      const tx = await contract.registerDoctor(
         account,
         name,
-        dob,
-        gender,
-        bloodGroup,
-        address,
-        email,
+        specialization,
         hhNumber,
+        email,
+        hospital,
         password
       );
       await tx.wait();
-      navigate("/patient-login");
-      toast.success("Patient registered successfully!");
+      navigate("/doctor-login");
+      toast.success("Doctor registered successfully!");
     } catch (err) {
       console.log(err?.message);
-      toast.error("An error occurred while registering the patient.");
+      toast.error("An error occurred while registering the doctor.");
     } finally {
       setWaiter(false);
     }
@@ -195,7 +175,7 @@ const Registration = () => {
             {/* Right Side - Form */}
             <div className="w-full md:w-1/2 p-8 space-y-6">
               <h1 className="text-2xl font-bold text-center text-gray-800">
-                Register Patient
+                Register Doctor
               </h1>
               <h3 className="text-center text-sm text-gray-500">
                 Connected as: {account}
@@ -216,12 +196,12 @@ const Registration = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-600">
-                      Date of Birth
+                      Hospital
                     </label>
                     <input
-                      type="date"
-                      value={dob}
-                      onChange={(e) => setDob(e.target.value)}
+                      type="text"
+                      value={hospital}
+                      onChange={(e) => setHospital(e.target.value)}
                       className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-2 focus:ring-black"
                     />
                   </div>
@@ -230,33 +210,17 @@ const Registration = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-600">
-                      Gender
+                      Specialization
                     </label>
                     <select
-                      value={gender}
-                      onChange={(e) => setGender(e.target.value)}
+                      value={specialization}
+                      onChange={(e) => setSpecialization(e.target.value)}
                       className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-2 focus:ring-black"
                     >
-                      <option value="">Select Gender</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
+                      <option value="">Select Specialization</option>
+                      <option value="Cardio">Cardio</option>
+                      <option value="Neuro">Neuro</option>
                       <option value="Other">Other</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-600">
-                      Blood Group
-                    </label>
-                    <select
-                      value={bloodGroup}
-                      onChange={(e) => setBloodGroup(e.target.value)}
-                      className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-2 focus:ring-black"
-                    >
-                      <option value="">Select Blood Group</option>
-                      <option value="O+">O+</option>
-                      <option value="A+">A+</option>
-                      <option value="B+">B+</option>
-                      <option value="AB+">AB+</option>
                     </select>
                   </div>
                 </div>
@@ -312,18 +276,6 @@ const Registration = () => {
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-600">
-                    Address
-                  </label>
-                  <input
-                    type="text"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-2 focus:ring-black"
-                  />
-                </div>
-
                 <button
                   type="submit"
                   className="w-full py-3 mt-4 text-lg font-bold text-white bg-black rounded-xl hover:bg-gray-300 hover:text-black cursor-pointer transition duration-300 focus:ring-2 focus:ring-gray-400"
@@ -332,7 +284,7 @@ const Registration = () => {
                 </button>
                 <p className="px-2 text-gray-500">
                   Already have an account?{" "}
-                  <Link className="text-blue-400" to="/patient-login">
+                  <Link className="text-blue-400" to="/doctor-login">
                     Login
                   </Link>
                 </p>
