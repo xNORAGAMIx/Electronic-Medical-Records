@@ -151,20 +151,23 @@ const Dashboard = () => {
         alert("No file to display");
         return;
       }
-
       if (!isEmpty) {
         const str = response.toString();
         const str_array = str.split(",");
-
+      
         const images = str_array.map((item, i) => {
+          const ipfsHash = item.startsWith("ipfs://") ? item.substring(7) : item; // Ensure proper IPFS hash
+          const fileUrl = `https://gateway.pinata.cloud/ipfs/${ipfsHash}`;
+          
+          // Assuming the file contains a timestamp (You can modify this based on actual data)
+          const uploadDate = new Date().toLocaleString(); // Replace with actual timestamp if stored
+      
           return (
-            <a href={item} key={i} target="_blank">
-              {item.endsWith(".pdf") ? (
+            <a href={fileUrl} key={i} target="_blank" rel="noopener noreferrer">
+              {fileUrl.endsWith(".pdf") ? (
                 <object
                   key={i}
-                  data={`https://gateway.pinata.cloud/ipfs/${item.substring(
-                    6
-                  )}`}
+                  data={fileUrl}
                   type="application/pdf"
                   width="100%"
                   height="500px"
@@ -174,18 +177,20 @@ const Dashboard = () => {
               ) : (
                 <img
                   key={i}
-                  src={`https://gateway.pinata.cloud/ipfs/${item.substring(6)}`}
-                  alt="Content"
+                  src={fileUrl}
+                  alt={`Report ${i + 1} `}
                   className="image-list"
                 />
               )}
             </a>
           );
         });
+      
         setReports(images);
       } else {
         alert("No file to display");
       }
+      
     };
     getData();
   }, [account, uploadContract, getAcc]);
@@ -406,7 +411,7 @@ const Dashboard = () => {
             )}
 
             {/* Uploaded Reports Section */}
-            <div>
+            <div className="p-10">
               <h2 className="text-3xl font-semibold text-gray-800 mb-6 border-b pb-4 flex items-center space-x-2">
                 <span className="text-blue-500">📂</span>
                 <span>Uploaded Reports</span>
@@ -424,7 +429,7 @@ const Dashboard = () => {
                             <span className="text-xl text-blue-600">📄</span>
                             <span className="text-lg font-bold text-black">
                               {report}
-                            </span>
+                            </span> 
                           </div>
                         </li>
                       ))}
@@ -437,84 +442,7 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Grant Permission Button */}
-            <button
-              onClick={toggleModal}
-              className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition cursor-pointer duration-300"
-            >
-              Grant Permission
-            </button>
-
-            {/* Modal for Granting Permission */}
-            {isModalOpen && (
-              <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50 backdrop-blur-lg">
-                <div className="bg-white p-8 rounded-xl w-full max-w-xl space-y-6 shadow-xl">
-                  <h3 className="text-2xl font-semibold text-gray-800 mb-4">
-                    Grant Permission
-                  </h3>
-                  <form onSubmit={handleShare}>
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <label
-                          className="text-sm font-medium text-gray-600"
-                          htmlFor="name"
-                        >
-                          Address
-                        </label>
-                        <input
-                          value={address}
-                          type="text"
-                          id="name"
-                          onChange={(e) => setAddress(e.target.value)}
-                          className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label
-                          className="text-sm font-medium text-gray-600"
-                          htmlFor="email"
-                        >
-                          Email
-                        </label>
-                        <input
-                          type="email"
-                          id="email"
-                          className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                      </div>
-
-                      <select
-                        id="selectNumber"
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      >
-                        <option>People With Access</option>
-                        {addressList.map((opt, index) => (
-                          <option key={index} value={opt}>
-                            {opt}
-                          </option>
-                        ))}
-                      </select>
-
-                      <div className="flex justify-end space-x-4">
-                        <button
-                          type="button"
-                          onClick={toggleModal}
-                          className="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          type="submit"
-                          className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                        >
-                          Submit
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            )}
+            
           </div>
         </div>
       </div>

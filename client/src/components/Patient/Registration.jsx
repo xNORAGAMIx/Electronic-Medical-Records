@@ -128,7 +128,7 @@ const Registration = () => {
       alert("Patient registered successfully!");
     } catch (err) {
       console.log(err?.message);
-      alert("An error occurred while registering the doctor.");
+      alert("An error occurred while registering the patient.");
     }
   };
 

@@ -24,7 +24,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white shadow-lg">
+    <header className="pt-5 pb-5 bg-gradient-to-r from-blue-700 to-indigo-800 text-white shadow-lg">
       <div className="container mx-auto flex justify-between items-center px-6 py-4">
         {/* Logo */}
         <Link to="/" className="text-4xl font-extrabold tracking-wider">
@@ -47,10 +47,10 @@ const Header = () => {
           <ul className="flex flex-col md:flex-row items-center gap-6 text-lg font-medium">
             <li>
               <Link
-                to="/"
+                to="/grant-permission"
                 className="hover:text-yellow-400 transition duration-300"
               >
-                Home
+                Grant Permission
               </Link>
             </li>
 
@@ -96,7 +96,7 @@ const Header = () => {
                     to={`/patient/${hhNumber}`}
                     className="hover:text-yellow-400 transition duration-300"
                   >
-                    Dashboard
+                    Profile
                   </Link>
                 </li>
                 <li>
