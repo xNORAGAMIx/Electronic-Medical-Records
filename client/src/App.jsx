@@ -19,6 +19,7 @@ import Doctors from "./pages/Doctors";
 import LoginPage from "./components/Login";
 import RegisterPage from "./components/Register";
 import PrivateRoute from "./components/PrivateRoute";
+import Appointments from "./pages/Appointments";
 
 const App = () => {
   return (
@@ -41,6 +42,14 @@ const App = () => {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/patient-appointments"
+          element={
+            <PrivateRoute>
+              <Appointments />
+            </PrivateRoute>
+          }
+        />
 
         {/* Doctor */}
         <Route path="/doctor-register" element={<RegistrationDoctor />} />
@@ -54,8 +63,8 @@ const App = () => {
           }
         />
 
-        {/* Doctor List */}
-        <Route path="/doctor-list" element={<Doctors />} />
+        {/* Doctor List - Public */}
+        <Route path="/doctor-list/:hospitalName" element={<Doctors />} />
       </Routes>
       <ToastContainer
         position="top-right"

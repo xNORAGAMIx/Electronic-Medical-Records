@@ -102,6 +102,14 @@ const Header = () => {
               <>
                 <li>
                   <Link
+                    to={`/patient-appointments`}
+                    className="hover:text-yellow-400 transition duration-300"
+                  >
+                    Appointments
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     to={`/patient/${hhNumber}`}
                     className="hover:text-yellow-400 transition duration-300"
                   >

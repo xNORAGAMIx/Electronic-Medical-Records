@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+//import { toast } from "react-toastify";
 
 import {
-  connectToBlockchain,
+  connectToDoctor,
   clearDoctorState,
 } from "../redux/contract/doctorSlice";
 
@@ -31,7 +31,7 @@ const Hospital = () => {
 
   // connect to network
   useEffect(() => {
-    dispatch(connectToBlockchain(privateKey, contractAddress, contractABI));
+    dispatch(connectToDoctor(privateKey, contractAddress, contractABI));
   }, [dispatch]);
 
   // clear state when component unmounts
@@ -68,7 +68,9 @@ const Hospital = () => {
     }
   }, [contract]);
 
-  
+  const handleClick = (hospitalName) => {
+    navigate(`/doctor-list/${encodeURIComponent(hospitalName)}`);
+  };
 
   // contract loading
   if (loading) {
@@ -119,6 +121,9 @@ const Hospital = () => {
           <ul className="space-y-3">
             {filteredHospitals.map((hospital, index) => (
               <li
+                onClick={() => {
+                  handleClick(hospital);
+                }}
                 key={index}
                 className="p-4 border border-gray-200 rounded-lg hover:bg-blue-50 transition-colors"
               >

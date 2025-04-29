@@ -15,6 +15,7 @@ import userReducer from "./user/userSlice";
 import blockchainReducer from "./contract/blockchainSlice";
 import uploadReducer from "./contract/uploadSlice";
 import doctorReducer from "./contract/doctorSlice";
+import appointmentReducer from "./contract/appointmentSlice";
 
 const persistConfig = {
   key: "root",
@@ -31,6 +32,7 @@ const store = configureStore({
     user: persistedUserReducer,
     upload: uploadReducer,
     doctor: doctorReducer,
+    appointment: appointmentReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -39,6 +41,7 @@ const store = configureStore({
           "blockchain/setBlockchainState",
           "doctor/setDoctorState",
           "upload/setUploadState",
+          "appointment/setAppointmentState",
           FLUSH,
           REHYDRATE,
           PAUSE,
@@ -53,6 +56,9 @@ const store = configureStore({
           "doctor.contract",
           "doctor.provider",
           "doctor.account",
+          "appointment.contract",
+          "appointment.provider",
+          "appointment.account",
           "upload.contract",
           "upload.provider",
           "upload.account",
