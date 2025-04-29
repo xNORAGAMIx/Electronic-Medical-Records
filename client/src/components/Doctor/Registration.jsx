@@ -22,13 +22,14 @@ const Registration = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // registration states
   const [name, setName] = useState("");
   const [specialization, setSpecialization] = useState("");
   const [hospital, setHospital] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [hhNumber, setHHNumber] = useState("");
+  const [licenseNumber, setLicenseNumber] = useState("");
 
   const { account, contract, loading } = useSelector((state) => state.doctor);
 
@@ -62,14 +63,14 @@ const Registration = () => {
       !specialization ||
       !password ||
       !email ||
-      !hhNumber ||
+      !licenseNumber ||
       !confirmPassword
     ) {
       toast.error("Please fill in all the required fields.");
       return;
     }
 
-    if (hhNumber.length != 6) {
+    if (licenseNumber.length != 6) {
       toast.error(
         "You have entered a wrong HH Number. Please enter a 6-digit HH Number."
       );
@@ -95,7 +96,7 @@ const Registration = () => {
 
     try {
       setWaiter(true);
-      const isRegDoc = await contract.isDoctorRegistered(hhNumber);
+      const isRegDoc = await contract.isDoctorRegistered(licenseNumber);
 
       if (isRegDoc) {
         toast.error("Doctor already exists");
@@ -106,7 +107,7 @@ const Registration = () => {
         account,
         name,
         specialization,
-        hhNumber,
+        licenseNumber,
         email,
         hospital,
         password
@@ -233,8 +234,8 @@ const Registration = () => {
                     <input
                       type="text"
                       maxLength="6"
-                      value={hhNumber}
-                      onChange={(e) => setHHNumber(e.target.value)}
+                      value={licenseNumber}
+                      onChange={(e) => setLicenseNumber(e.target.value)}
                       className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-2 focus:ring-black"
                     />
                   </div>

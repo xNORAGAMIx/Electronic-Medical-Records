@@ -147,6 +147,7 @@ const Doctors = () => {
   }
 
   const handleBooking = async (doctorNumber) => {
+    
     if (!isLoggedIn) {
       toast.error("You need to login first!");
       return;

@@ -104,7 +104,7 @@ const Appointments = () => {
           walletAddress: d[0],
           name: d[1],
           specialization: d[2],
-          hhNumber: d[3],
+          licenseNumber: d[3],
           email: d[4],
           hospital: d[5],
         }));
@@ -112,7 +112,7 @@ const Appointments = () => {
         const combined = parsedAppointments
           ?.map((appointment) => {
             const doctor = doctorList?.find(
-              (doc) => String(doc.hhNumber) === appointment.doctorId
+              (doc) => String(doc.licenseNumber) === appointment.doctorId
             );
             if (doctor) {
               return {

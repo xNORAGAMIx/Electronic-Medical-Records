@@ -10,14 +10,14 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const hhNumber = useSelector((state) => state.user.hhNumber);
+  const licenseNumber = useSelector((state) => state.user.licenseNumber);
 
   const handleLogout = () => {
     dispatch(clearUser());
     localStorage.clear();
     navigate("/");
   };
-
-  const hhNumber = localStorage.getItem("hhNumber");
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
@@ -101,20 +101,40 @@ const Header = () => {
             ) : (
               <>
                 <li>
-                  <Link
-                    to={`/patient-appointments`}
-                    className="hover:text-yellow-400 transition duration-300"
-                  >
-                    Appointments
-                  </Link>
+                  {hhNumber ? (
+                    <Link
+                      to={`/patient-appointments`}
+                      className="hover:text-yellow-400 transition duration-300"
+                    >
+                      Appointments
+                    </Link>
+                  ) : licenseNumber ? (
+                    <Link
+                      to={`/doctor-appointments`}
+                      className="hover:text-yellow-400 transition duration-300"
+                    >
+                      Appointments
+                    </Link>
+                  ) : (
+                    <></>
+                  )}
                 </li>
                 <li>
-                  <Link
-                    to={`/patient/${hhNumber}`}
-                    className="hover:text-yellow-400 transition duration-300"
-                  >
-                    Dashboard
-                  </Link>
+                  {hhNumber ? (
+                    <Link
+                      to={`/patient/${hhNumber}`}
+                      className="hover:text-yellow-400 transition duration-300"
+                    >
+                      Dashboard
+                    </Link>
+                  ) : (
+                    <Link
+                      to={`/doctor/${licenseNumber}`}
+                      className="hover:text-yellow-400 transition duration-300"
+                    >
+                      Dashboard
+                    </Link>
+                  )}
                 </li>
                 <li>
                   <button
