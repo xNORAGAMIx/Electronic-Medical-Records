@@ -81,7 +81,7 @@ const App = () => {
         pauseOnHover
         theme="colored"
       />
-
+       <div>ijdsjd</div>
       <Footer/>
     </div>
   );
