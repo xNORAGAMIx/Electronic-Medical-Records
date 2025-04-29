@@ -1,3 +1,5 @@
 export const PATIENT_CONTRACT_ADDRESS = import.meta.env.VITE_PATIENT_CONTRACT_ADDRESS;
 export const UPLOAD_CONTRACT_ADDRESS = import.meta.env.VITE_UPLOAD_CONTRACT_ADDRESS;
+export const DOCTOR_CONTRACT_ADDRESS = import.meta.env.VITE_DOCTOR_CONTRACT_ADDRESS;
 export const PRIVATE_KEY = import.meta.env.VITE_PRIVATE_KEY;
+

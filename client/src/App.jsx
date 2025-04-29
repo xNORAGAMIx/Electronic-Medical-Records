@@ -11,8 +11,9 @@ import LoginPage from "./components/Login";
 import RegisterPage from "./components/Register";
 import PrivateRoute from "./components/PrivateRoute";
 import GrantPermission from "./components/Patient/GrantPermission";
-import DoctorRegistration from "../../contracts/ignition/modules/DoctorRegistration";
-
+import DoctorRegistration from "./components/Doctor/DoctorRegistration";
+import DocLogin from "./components/Doctor/Login";
+import DoctorDashboard from "./components/Doctor/DoctorDashboard";
 const App = () => {
   return (
     <>
@@ -23,8 +24,10 @@ const App = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/patient-register" element={<Registration />} />
         <Route path="/patient-login" element={<Login />} />
-        <Route path="/doctor-register" element={<DoctorRegistration/>}/>
+         <Route path="/doctor-register" element={<DoctorRegistration/>}/>
         <Route path ="grant-permission" element={<GrantPermission/>}/>
+        <Route path="/doctor-login" element={<DocLogin/>}/>
+        <Route path="/doctor/:licenceNumber" element={<DoctorDashboard/>}/>
         <Route
           path="patient/:hhNumber"
           element={
@@ -34,6 +37,7 @@ const App = () => {
           }
         />
       </Routes>
+
     </>
   );
 };

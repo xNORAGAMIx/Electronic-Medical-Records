@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
-import { connectToBlockchain, clearBlockchainState } from "../../redux/contract/blockchainSlice";
-
-import DoctorRegistrationContract from "../../constants/DoctorRegistration.json";
 import { useDispatch, useSelector } from "react-redux";
 
+import { connectDoctorContract, clearDoctorState } from "../../redux/contract/doctorSlice";
+
+import DoctorRegistrationContract from "../../constants/DoctorRegistration.json";
 import { DOCTOR_CONTRACT_ADDRESS, PRIVATE_KEY } from "../../constants/Values";
 
-import loginImage from "../../../public/5053643.jpg";
+import loginImage from "../../../public/5053643.jpg"; // Make sure your image path is correct!
 
 const contractABI = DoctorRegistrationContract.abi;
 const contractAddress = DOCTOR_CONTRACT_ADDRESS;
@@ -25,18 +24,15 @@ const DoctorRegistration = () => {
   const [licenseNumber, setLicenseNumber] = useState("");
   const [email, setEmail] = useState("");
   const [hospital, setHospital] = useState("");
+  const [password, setPassword] = useState("");
 
-  const contract = useSelector((state) => state.blockchain.contract);
-  const loading = useSelector((state) => state.blockchain.loading);
-  const account = useSelector((state) => state.blockchain.account);
-
-  useEffect(() => {
-    dispatch(connectToBlockchain(privateKey, contractAddress, contractABI));
-  }, [dispatch]);
+  const { contract, loading, account, owner } = useSelector((state) => state.doctor); // Assuming `owner` holds the contract owner address
 
   useEffect(() => {
+    dispatch(connectDoctorContract(privateKey, contractAddress, contractABI));
+
     return () => {
-      dispatch(clearBlockchainState());
+      dispatch(clearDoctorState());
     };
   }, [dispatch]);
 
@@ -48,13 +44,18 @@ const DoctorRegistration = () => {
       return;
     }
 
-    if (!account || !name || !dob || !gender || !bloodGroup || !specialization || !licenseNumber || !email || !hospital) {
+    if (!account || !name || !dob || !gender || !bloodGroup || !specialization || !licenseNumber || !email || !hospital || !password) {
       alert("You have missing input fields. Please fill in all required fields.");
       return;
     }
 
     if (licenseNumber.length !== 6) {
       alert("License Number should be exactly 6 characters.");
+      return;
+    }
+
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters long.");
       return;
     }
 
@@ -65,29 +66,54 @@ const DoctorRegistration = () => {
     }
 
     try {
-      const isRegDoc = await contract.isRegisteredDoctor(licenseNumber);
+      // Check if the user is the contract owner or a doctor trying to register
+      const isRegDoc = await contract.isDoctorRegistered(licenseNumber);
 
       if (isRegDoc) {
         alert("Doctor already registered with this License Number.");
         return;
       }
 
-      const tx = await contract.registerDoctor(
-        account,
-        name,
-        dob,
-        gender,
-        bloodGroup,
-        specialization,
-        licenseNumber,
-        email,
-        hospital
-      );
-      await tx.wait();
-      alert("Doctor registered successfully!");
+      if (account === owner) {
+        // If the contract owner is registering, proceed with registration
+        const tx = await contract.registerDoctor(
+          account,
+          name,
+          dob,
+          gender,
+          bloodGroup,
+          specialization,
+          licenseNumber,
+          email,
+          hospital,
+          password
+        );
+        await tx.wait();
+        alert("Doctor registered successfully!");
+      } else {
+        // If the user is a doctor themselves, allow registration
+        const tx = await contract.registerDoctor(
+          account,
+          name,
+          dob,
+          gender,
+          bloodGroup,
+          specialization,
+          licenseNumber,
+          email,
+          hospital,
+          password
+        );
+        await tx.wait();
+        alert("Doctor registered successfully!");
+      }
     } catch (err) {
       console.error(err?.message);
-      alert("An error occurred while registering the doctor.");
+      if (err?.message.includes("Only owner can perform this action")) {
+        alert("Only the contract owner can register doctors.");
+      } else {
+        alert("An error occurred while registering the doctor.");
+      }
     }
   };
 
@@ -213,6 +239,16 @@ const DoctorRegistration = () => {
                 type="text"
                 value={hospital}
                 onChange={(e) => setHospital(e.target.value)}
+                className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-2 focus:ring-black"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-600">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-2 focus:ring-black"
               />
             </div>
