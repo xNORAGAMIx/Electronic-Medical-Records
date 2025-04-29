@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setDoctorState } from "../../redux/contract/doctorSlice";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { connectDoctorContract, setDoctorState } from "../../redux/contract/doctorSlice";
 import { connectToBlockchain } from "../../redux/contract/blockchainSlice";
 
 import DoctorRegistration from "../../constants/DoctorRegistration.json";
@@ -34,12 +34,13 @@ const DoctorDashboard = () => {
 
   // Connect to blockchain
   useEffect(() => {
-    dispatch(setDoctorState(privateKey, doctorAddress, doctorABI));
+    dispatch(connectDoctorContract(privateKey, doctorAddress, doctorABI));
     dispatch(connectToBlockchain(privateKey, patientAddress, patientABI));
   }, [dispatch]);
 
   // Fetch doctor details
   useEffect(() => {
+
     const fetchDoctorDetails = async () => {
       try {
         const doctor = await doctorContract.getDoctorDetails(licenceNumber);
