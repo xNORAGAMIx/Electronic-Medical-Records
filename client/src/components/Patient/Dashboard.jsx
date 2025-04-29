@@ -44,7 +44,7 @@ const Dashboard = () => {
   const { hhNumber } = useParams();
   const numberStorage = localStorage.getItem("hhNumber");
 
-  // deny unauthorized access
+  // deny unauthorized access`````````````````````````````
   useEffect(() => {
     if (numberStorage !== hhNumber) {
       navigate("/patient/" + numberStorage, { replace: true });
