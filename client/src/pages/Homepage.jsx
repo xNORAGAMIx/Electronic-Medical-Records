@@ -1,101 +1,147 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
-import { FaShieldAlt, FaLock, FaUserMd, FaFileMedical } from "react-icons/fa";
+import { 
+  FaShieldAlt, 
+  FaLock, 
+  FaUserMd, 
+  FaFileMedical,
+  FaGlobe,
+  FaChartLine,
+  FaUserShield
+} from "react-icons/fa";
 import { motion } from "framer-motion";
+import { FiArrowRight } from "react-icons/fi";
+import { Link } from "react-router-dom";
+
 
 const HomePage = () => {
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen">
       {/* Hero Section */}
-      <section className="bg-blue-100 text-black py-24 px-6 md:px-12">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-            Blockchain-Powered EMR
-          </h1>
-          <p className="text-lg md:text-2xl mt-4 mb-8">
-            Secure, Transparent, and Accessible Medical Records Anytime, Anywhere
-          </p>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg cursor-pointer font-semibold transition shadow-lg">
-            Get Started
-          </button>
+      <section className="relative bg-gradient-to-r from-[#0a0f2c] to-[#1a1f3c] text-white pt-32 pb-24 px-6 md:px-12 overflow-hidden">
+        <div className="max-w-7xl mx-auto text-center relative z-10">
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-4xl md:text-6xl font-bold leading-tight mb-6"
+          >
+            <span className="text-cyan-300">Secure</span> Medical Records on Blockchain
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8"
+          >
+            Immutable, decentralized electronic health records with military-grade security
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <Link
+              to="/register"
+              className="inline-flex items-center bg-cyan-400 hover:bg-cyan-500 text-[#0a0f2c] px-8 py-4 rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl"
+            >
+              Get Started <FiArrowRight className="ml-2" />
+            </Link>
+          </motion.div>
+        </div>
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-300 rounded-full mix-blend-screen filter blur-3xl opacity-20"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-300 rounded-full mix-blend-screen filter blur-3xl opacity-20"></div>
         </div>
       </section>
 
       {/* Key Benefits */}
-      <section className="py-16 px-6 md:px-12 bg-gray-100">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
-          {[
-            {
-              icon: <FaShieldAlt className="text-5xl text-teal-500" />,
-              title: "Immutable Security",
-              desc: "Your records are tamper-proof and securely stored using blockchain.",
-              img: "https://img.freepik.com/premium-vector/blockchain-cybersecurity-isolated-cartoon-vector-illustrations_107173-21524.jpg?w=740"
-            },
-            {
-              icon: <FaLock className="text-5xl text-orange-500" />,
-              title: "Privacy First",
-              desc: "Only authorized users can access the medical data.",
-              img: "https://img.freepik.com/free-vector/protected-personal-data-laptop-isometric-illustration-with-colorful-elements-white_1284-63284.jpg?t=st=1743154971~exp=1743158571~hmac=5da452a4c7a1a06cdbcc3113104723b42bddea006c9dbfa26031a3ba0a617cf1&w=740"
-            },
-            {
-              icon: <FaUserMd className="text-5xl text-purple-500" />,
-              title: "Seamless Accessibility",
-              desc: "Patients and doctors can access records globally.",
-              img: "https://img.freepik.com/free-vector/electronic-accessibility-concept-illustration_114360-20320.jpg?t=st=1743155020~exp=1743158620~hmac=50351c4dc4db6b3250fc9f52418fecf1177a4bf798e3ea60a8e5123486ef5d60&w=740"
-            }
-          ].map((item, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ scale: 1.05 }}
-              className="bg-white shadow-lg rounded-2xl overflow-hidden transition duration-300 hover:shadow-2xl"
-            >
-              <img src={item.img} alt={item.title} className="w-full h-48 object-contain" />
-              <div className="p-6 text-center">
-                {item.icon}
-                <h2 className="text-2xl font-bold mt-4">{item.title}</h2>
-                <p className="text-gray-600 mt-2">{item.desc}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section className="bg-white py-16 px-6 md:px-12">
+      <section className="py-20 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12">How It Works</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0a0f2c] mb-4">Why Choose LifeLedger?</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Revolutionizing healthcare with blockchain technology for secure, transparent medical records
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: <FaFileMedical className="text-5xl text-teal-600" />,
-                title: "Record Creation",
-                desc: "Doctors create medical records securely stored on the blockchain.",
-                img: "https://source.unsplash.com/400x300/?medical,records"
+                icon: <FaShieldAlt className="text-4xl text-cyan-400" />,
+                title: "Immutable Records",
+                desc: "Tamper-proof medical history stored on decentralized blockchain",
+                bg: "bg-gradient-to-br from-cyan-50 to-blue-50"
               },
               {
-                icon: <FaLock className="text-5xl text-orange-600" />,
-                title: "Encrypted Storage",
-                desc: "Records are encrypted and only accessible to authorized users.",
-                img: "https://source.unsplash.com/400x300/?encryption,security"
+                icon: <FaUserShield className="text-4xl text-purple-400" />,
+                title: "Patient Control",
+                desc: "You decide who accesses your health information",
+                bg: "bg-gradient-to-br from-purple-50 to-indigo-50"
               },
               {
-                icon: <FaUserMd className="text-5xl text-purple-600" />,
+                icon: <FaGlobe className="text-4xl text-blue-400" />,
                 title: "Global Access",
-                desc: "Patients and providers access records using private keys.",
-                img: "https://source.unsplash.com/400x300/?global,healthcare"
+                desc: "Access your records anywhere, anytime",
+                bg: "bg-gradient-to-br from-blue-50 to-cyan-50"
               }
             ].map((item, index) => (
               <motion.div
                 key={index}
-                whileHover={{ scale: 1.05 }}
-                className="bg-gray-100 rounded-2xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl"
+                whileHover={{ y: -5 }}
+                className={`${item.bg} p-8 rounded-2xl shadow-md hover:shadow-lg transition-all`}
               >
-                <img src={item.img} alt={item.title} className="w-full h-48 object-cover" />
-                <div className="p-6 text-center">
+                <div className="flex justify-center mb-6">
                   {item.icon}
-                  <h3 className="text-2xl font-bold mt-4">{item.title}</h3>
-                  <p className="text-gray-600 mt-2">{item.desc}</p>
                 </div>
+                <h3 className="text-xl font-bold text-[#0a0f2c] mb-3 text-center">{item.title}</h3>
+                <p className="text-gray-600 text-center">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="py-20 px-6 md:px-12 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0a0f2c] mb-4">How It Works</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Simple, secure process for managing your health records
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: <FaFileMedical className="text-4xl text-cyan-400" />,
+                title: "1. Record Creation",
+                desc: "Healthcare providers create encrypted records stored on blockchain",
+                border: "border-cyan-200"
+              },
+              {
+                icon: <FaLock className="text-4xl text-purple-400" />,
+                title: "2. Secure Storage",
+                desc: "Data is cryptographically secured with private key access",
+                border: "border-purple-200"
+              },
+              {
+                icon: <FaUserMd className="text-4xl text-blue-400" />,
+                title: "3. Controlled Access",
+                desc: "Patients grant permission to doctors and institutions",
+                border: "border-blue-200"
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ scale: 1.02 }}
+                className={`border-t-4 ${item.border} bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-all`}
+              >
+                <div className="flex justify-center mb-6">
+                  {item.icon}
+                </div>
+                <h3 className="text-xl font-bold text-[#0a0f2c] mb-3 text-center">{item.title}</h3>
+                <p className="text-gray-600 text-center">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -103,70 +149,78 @@ const HomePage = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="bg-gray-100 py-16 px-6 md:px-12">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-12">What Our Users Say</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <section className="py-20 px-6 md:px-12 bg-gradient-to-br from-[#0a0f2c] to-[#1a1f3c]">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Trusted by Healthcare Professionals</h2>
+            <p className="text-gray-300 max-w-2xl mx-auto">
+              What doctors and patients say about our platform
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               {
                 name: "Dr. Aisha Khan",
-                role: "Cardiologist",
-                quote: "The blockchain-powered EMR ensures complete data integrity and easy accessibility.",
-                img: "https://source.unsplash.com/150x150/?doctor"
+                role: "Cardiologist, Metro Hospital",
+                quote: "LifeLedger has transformed how we manage patient records with its unparalleled security and accessibility.",
+                img: "https://randomuser.me/api/portraits/women/44.jpg"
               },
               {
                 name: "Rohan Sharma",
                 role: "Patient",
-                quote: "I feel secure knowing my medical data is private and protected.",
-                img: "https://source.unsplash.com/150x150/?patient"
+                quote: "Finally, a medical records system that puts patients in control of their own health data.",
+                img: "https://randomuser.me/api/portraits/men/32.jpg"
               }
             ].map((item, index) => (
               <motion.div
                 key={index}
-                whileHover={{ scale: 1.05 }}
-                className="bg-white rounded-2xl shadow-lg p-8 transition duration-300 hover:shadow-2xl"
+                whileHover={{ y: -5 }}
+                className="bg-white bg-opacity-10 backdrop-blur-sm p-8 rounded-2xl border border-gray-700 hover:border-cyan-400 transition-all"
               >
-                <img
-                  src={item.img}
-                  alt={item.name}
-                  className="w-16 h-16 rounded-full mx-auto mb-4"
-                />
-                <p className="text-gray-600 italic mb-4">"{item.quote}"</p>
-                <h4 className="font-bold">{item.name}</h4>
-                <span className="text-gray-500">{item.role}</span>
+                <div className="flex items-center mb-6">
+                  <img src={item.img} alt={item.name} className="w-16 h-16 rounded-full border-2 border-cyan-400" />
+                  <div className="ml-4">
+                    <h4 className="text-xl font-semibold text-white">{item.name}</h4>
+                    <p className="text-cyan-300">{item.role}</p>
+                  </div>
+                </div>
+                <p className="text-gray-300 italic">"{item.quote}"</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8 px-6 md:px-12">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-          <div>
-            <h3 className="text-xl font-bold mb-4">About Us</h3>
-            <p className="text-gray-400">
-              Empowering healthcare with blockchain-secured medical records.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-xl font-bold mb-4">Links</h3>
-            <ul className="text-gray-400 space-y-2">
-              <li><a href="#" className="hover:text-orange-500">Home</a></li>
-              <li><a href="#" className="hover:text-orange-500">Features</a></li>
-              <li><a href="#" className="hover:text-orange-500">Contact</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-xl font-bold mb-4">Contact</h3>
-            <p className="text-gray-400">Email: support@emrapp.com</p>
-            <p className="text-gray-400">Phone: +1 (123) 456-7890</p>
-          </div>
-        </div>
-        <div className="text-center text-gray-500 mt-8">
-          &copy; {new Date().getFullYear()} EMR App. All rights reserved.
-        </div>
-      </footer>
+      {/* CTA */}
+{/* CTA Section */}
+
+<section className="py-20 px-6 md:px-12 bg-gradient-to-r from-[#0a0f2c] to-[#1a2350]">
+  <div className="max-w-4xl mx-auto text-center  ">
+    <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+      <span className="text-cyan-300">Ready</span> to Transform Your Medical Records?
+    </h2>
+    <p className="text-gray-300 text-xl mb-8">
+      Join healthcare's secure blockchain revolution today
+    </p>
+    <div className="flex flex-col sm:flex-row justify-center gap-4">
+      <Link
+        to="/register"
+        className="bg-cyan-400 hover:bg-cyan-500 text-[#0a0f2c] px-8 py-4 rounded-lg font-bold transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+      >
+        Get Started <FiArrowRight />
+      </Link>
+      <Link
+        to="/contact"
+        className="bg-transparent border-2 border-cyan-400 text-cyan-400 px-8 py-4 rounded-lg font-bold transition-all hover:bg-cyan-400 hover:text-[#0a0f2c] hover:border-transparent"
+      >
+        Contact Our Team
+      </Link>
+    </div>
+  </div>
+  {/* Subtle blockchain pattern overlay */}
+  <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjMDAwMDAwIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDBMOCA4Wk04IDBMMCA4WiIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2U9IiNmZmYiPjwvcGF0aD4KPC9zdmc+')]"></div>
+</section>
     </div>
   );
 };

@@ -10,7 +10,7 @@ import { setUser } from "../../redux/user/userSlice";
 import PatientRegistration from "../../constants/PatientRegistration.json";
 import { PATIENT_CONTRACT_ADDRESS, PRIVATE_KEY } from "../../constants/Values";
 
-import loginImage from "../../../public/5053643.jpg";
+import reception from "../../../public/reception.jpg";
 
 // setting up constants
 const contractABI = PatientRegistration.abi;
@@ -109,19 +109,19 @@ const Login = () => {
     return <div>Loading blockchain connection...</div>;
   }
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-[#ebf0f6] to-[#e6f0ff] p-4">
       <div className="flex bg-white rounded-2xl shadow-lg overflow-hidden w-full max-w-4xl -mt-20">
         {/* Left Side - Image */}
         <div className="hidden md:block w-1/2 bg-gray-200">
           <img
-            src={loginImage}
+            src={reception}
             alt="Login Illustration"
             className="object-cover w-full h-full"
           />
         </div>
 
         {/* Right Side - Form */}
-        <div className="w-full md:w-1/2 p-8 space-y-6">
+        <div className="w-full md:w-1/2 p-8 space-y-6 bg-gradient-to-b from-[#f5f6f7] to-[#e6f0ff]">
           <h1 className="text-2xl font-bold text-center text-gray-800">
             Patient Login
           </h1>

@@ -9,7 +9,7 @@ import { setUser } from "../../redux/user/userSlice";
 import DoctorRegistration from "../../constants/DoctorRegistration.json";
 import { DOCTOR_CONTRACT_ADDRESS, PRIVATE_KEY } from "../../constants/Values";
 
-import loginImage from "../../../public/5053643.jpg";
+import image from "../../../public/image.png";
 
 const contractABI = DoctorRegistration.abi;
 const contractAddress = DOCTOR_CONTRACT_ADDRESS;
@@ -102,12 +102,12 @@ const Login = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-[#f8fbff] to-[#e6f0ff] p-4">
       <div className="flex bg-white rounded-2xl shadow-lg overflow-hidden w-full max-w-4xl -mt-20">
         {/* Left Side - Image */}
         <div className="hidden md:block w-1/2 bg-gray-200">
           <img
-            src={loginImage}
+            src={image}
             alt="Login Illustration"
             className="object-cover w-full h-full"
           />

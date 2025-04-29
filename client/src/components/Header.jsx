@@ -2,14 +2,25 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { clearUser } from "../redux/user/userSlice";
 import { useState } from "react";
-import { FiMenu, FiX } from "react-icons/fi";
+import {
+  FiMenu,
+  FiX,
+  FiHome,
+  FiInfo,
+  FiPhone,
+  FiClipboard,
+  FiLogOut,
+  FiUserPlus,
+  FiCalendar,
+  FiGrid
+} from "react-icons/fi";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const hhNumber = localStorage.getItem("hhNumber");
 
   const handleLogout = () => {
     dispatch(clearUser());
@@ -17,48 +28,36 @@ const Header = () => {
     navigate("/");
   };
 
-  const hhNumber = localStorage.getItem("hhNumber");
-
-  const toggleMenu = () => {
-    setMenuOpen((prev) => !prev);
-  };
+  const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   return (
-    <header className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white shadow-lg">
-      <div className="container mx-auto flex justify-between items-center px-6 py-4">
+    <header className="bg-[#0a0f2c] text-white shadow-md sticky top-0 z-50">
+      <div className="container mx-auto flex justify-between items-center px-6 py-4 relative">
+        
         {/* Logo */}
-        <Link to="/" className="text-4xl font-extrabold tracking-wider">
+        <Link to="/" className="text-2xl md:text-3xl font-bold tracking-wide text-cyan-300 hover:text-cyan-400 transition">
           LifeLedger
         </Link>
 
-        {/* Hamburger Menu for Mobile */}
-        <div className="md:hidden">
-          <button onClick={toggleMenu} className="text-white text-3xl">
-            {menuOpen ? <FiX /> : <FiMenu />}
-          </button>
-        </div>
+        {/* Hamburger Icon */}
+        <button onClick={toggleMenu} className="md:hidden text-3xl">
+          {menuOpen ? <FiX /> : <FiMenu />}
+        </button>
 
         {/* Navigation */}
-        <nav
-          className={`md:flex items-center gap-8 transition-all duration-300 ${
-            menuOpen ? "block" : "hidden"
-          } md:block absolute md:relative top-16 md:top-0 left-0 w-full md:w-auto bg-blue-900 md:bg-transparent z-10 md:z-auto shadow-md md:shadow-none`}
-        >
-          <ul className="flex flex-col md:flex-row items-center gap-6 text-lg font-medium">
+        <nav className={`absolute md:static w-full md:w-auto top-20 left-0 md:top-0 bg-[#0a0f2c] md:bg-transparent transition-all duration-300 z-40 ${menuOpen ? "block" : "hidden"} md:block`}>
+          <ul className="flex flex-col md:flex-row items-center gap-6 md:gap-10 px-6 md:px-0 py-4 md:py-0 text-base font-medium">
+
             <li>
-              <Link
-                to="/"
-                className="hover:text-yellow-400 transition duration-300"
-              >
+              <Link to="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 hover:text-cyan-300 transition">
+                <FiHome className="text-lg" />
                 Home
               </Link>
             </li>
 
             <li>
-              <Link
-                to="/hospitals"
-                className="hover:text-yellow-400 transition duration-300"
-              >
+              <Link to="/hospitals" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 hover:text-cyan-300 transition">
+                <FiClipboard className="text-lg" />
                 Hospitals
               </Link>
             </li>
@@ -66,34 +65,30 @@ const Header = () => {
             {!isLoggedIn ? (
               <>
                 <li>
-                  <Link
-                    to="/about"
-                    className="hover:text-yellow-400 transition duration-300"
-                  >
+                  <Link to="/about" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 hover:text-cyan-300 transition">
+                    <FiInfo className="text-lg" />
                     About
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/services"
-                    className="hover:text-yellow-400 transition duration-300"
-                  >
+                  <Link to="/services" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 hover:text-cyan-300 transition">
+                    <FiGrid className="text-lg" />
                     Services
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/contact"
-                    className="hover:text-yellow-400 transition duration-300"
-                  >
+                  <Link to="/contact" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 hover:text-cyan-300 transition">
+                    <FiPhone className="text-lg" />
                     Contact
                   </Link>
                 </li>
                 <li>
                   <Link
                     to="/register"
-                    className="bg-yellow-500 text-black px-6 py-2 rounded-md hover:bg-yellow-600 transition duration-300 shadow-md"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-2 bg-cyan-400 text-black px-5 py-2 rounded-md hover:bg-cyan-500 transition duration-300 shadow"
                   >
+                    <FiUserPlus className="text-lg" />
                     Get Started
                   </Link>
                 </li>
@@ -102,25 +97,33 @@ const Header = () => {
               <>
                 <li>
                   <Link
-                    to={`/patient-appointments`}
-                    className="hover:text-yellow-400 transition duration-300"
+                    to="/patient-appointments"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-2 hover:text-cyan-300 transition"
                   >
+                    <FiCalendar className="text-lg" />
                     Appointments
                   </Link>
                 </li>
                 <li>
                   <Link
                     to={`/patient/${hhNumber}`}
-                    className="hover:text-yellow-400 transition duration-300"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-2 hover:text-cyan-300 transition"
                   >
+                    <FiGrid className="text-lg" />
                     Dashboard
                   </Link>
                 </li>
                 <li>
                   <button
-                    onClick={handleLogout}
-                    className="bg-red-500 px-6 py-2 rounded-md hover:bg-red-600 transition duration-300 shadow-md"
+                    onClick={() => {
+                      handleLogout();
+                      setMenuOpen(false);
+                    }}
+                    className="flex items-center gap-2 bg-rose-500 px-5 py-2 rounded-md hover:bg-rose-600 transition duration-300 shadow"
                   >
+                    <FiLogOut className="text-lg" />
                     Logout
                   </button>
                 </li>

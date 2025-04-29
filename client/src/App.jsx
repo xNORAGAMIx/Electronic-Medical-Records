@@ -20,12 +20,15 @@ import LoginPage from "./components/Login";
 import RegisterPage from "./components/Register";
 import PrivateRoute from "./components/PrivateRoute";
 import Appointments from "./pages/Appointments";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
-    <>
+      <div className="min-h-screen flex flex-col">
+
       <Header />
-      <Routes>
+      <main className="flex-grow">
+     <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/hospitals" element={<Hospital />} />
         <Route path="/login" element={<LoginPage />} />
@@ -66,6 +69,7 @@ const App = () => {
         {/* Doctor List - Public */}
         <Route path="/doctor-list/:hospitalName" element={<Doctors />} />
       </Routes>
+     </main>
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -77,7 +81,9 @@ const App = () => {
         pauseOnHover
         theme="colored"
       />
-    </>
+
+      <Footer/>
+    </div>
   );
 };
 
