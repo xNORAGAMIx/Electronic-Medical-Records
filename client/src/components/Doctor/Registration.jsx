@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import {
-  connectToBlockchain,
+  connectToDoctor,
   clearDoctorState,
 } from "../../redux/contract/doctorSlice";
 
@@ -37,7 +37,7 @@ const Registration = () => {
 
   // connect to network
   useEffect(() => {
-    dispatch(connectToBlockchain(privateKey, contractAddress, contractABI));
+    dispatch(connectToDoctor(privateKey, contractAddress, contractABI));
   }, [dispatch]);
 
   // clear state when component unmounts

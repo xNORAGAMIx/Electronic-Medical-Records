@@ -13,10 +13,13 @@ import LoginDoctor from "./components/Doctor/Login";
 
 import Header from "./components/Header";
 import Homepage from "./pages/Homepage";
+import Hospital from "./pages/Hospital";
+import Doctors from "./pages/Doctors";
 
 import LoginPage from "./components/Login";
 import RegisterPage from "./components/Register";
 import PrivateRoute from "./components/PrivateRoute";
+import Appointments from "./pages/Appointments";
 
 const App = () => {
   return (
@@ -24,6 +27,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Homepage />} />
+        <Route path="/hospitals" element={<Hospital />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
 
@@ -35,6 +39,14 @@ const App = () => {
           element={
             <PrivateRoute>
               <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/patient-appointments"
+          element={
+            <PrivateRoute>
+              <Appointments />
             </PrivateRoute>
           }
         />
@@ -50,6 +62,9 @@ const App = () => {
             </PrivateRoute>
           }
         />
+
+        {/* Doctor List - Public */}
+        <Route path="/doctor-list/:hospitalName" element={<Doctors />} />
       </Routes>
       <ToastContainer
         position="top-right"

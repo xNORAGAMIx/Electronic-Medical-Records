@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { connectToBlockchain } from "../../redux/contract/doctorSlice";
+import { connectToDoctor } from "../../redux/contract/doctorSlice";
 import { setUser } from "../../redux/user/userSlice";
 
 import DoctorRegistration from "../../constants/DoctorRegistration.json";
@@ -27,7 +27,7 @@ const Login = () => {
   //coonect to network
   useEffect(() => {
     if (!account) {
-      dispatch(connectToBlockchain(privateKey, contractAddress, contractABI));
+      dispatch(connectToDoctor(privateKey, contractAddress, contractABI));
     }
   }, [dispatch, account]);
 

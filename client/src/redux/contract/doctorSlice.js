@@ -29,7 +29,7 @@ const doctorSlice = createSlice({
 
 export const { setDoctorState, clearDoctorState } = doctorSlice.actions;
 
-export const connectToBlockchain = (privateKey, contractAddress, contractABI) => async (dispatch) => {
+export const connectToDoctor = (privateKey, contractAddress, contractABI) => async (dispatch) => {
     try {
         const provider = new ethers.JsonRpcProvider("http://127.0.0.1:8545");
         const wallet = new ethers.Wallet(privateKey, provider);
