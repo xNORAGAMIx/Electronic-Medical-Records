@@ -24,6 +24,7 @@ contract PatientRegistration {
     mapping(string => Patient) public patients;
     mapping(string => PatientList[]) private Dpermission;
     mapping(string => mapping(string => bool)) public doctorPermissions;
+    string[] public registeredPatientsNumbers;
 
     event PatientRegistered(string hhNumber, string name, address walletAddress);
 
@@ -57,8 +58,20 @@ contract PatientRegistration {
         patients[_hhNumber] = newPatient;
         isPatientRegisteredAddress[_walletAddress] = true;
         isPatientRegistered[_hhNumber] = true;
+        registeredPatientsNumbers.push(_hhNumber); // << push license number
+
         emit PatientRegistered(_hhNumber, _name, _walletAddress);
     }
+
+    function getAllPatients() external view returns (Patient[] memory) {
+    uint256 count = registeredPatientsNumbers.length;
+    Patient[] memory result = new Patient[](count);
+    for (uint256 i = 0; i < count; i++) {
+        result[i] = patients[registeredPatientsNumbers[i]];
+    }
+    return result;
+}
+
 
     function isRegisteredPatient(string memory _hhNumber) external view returns (bool) {
         return isPatientRegistered[_hhNumber];

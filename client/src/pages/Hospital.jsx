@@ -51,7 +51,7 @@ const Hospital = () => {
         //   walletAddress: d.walletAddress,
         //   name: d.name,
         //   specialization: d.specialization,
-        //   hhNumber: d.hhNumber,
+        //   licenseNumber: d.licenseNumber,
         //   email: d.email,
         //   hospital: d.hospital,
         //   password: d.password,

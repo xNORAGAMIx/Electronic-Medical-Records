@@ -19,12 +19,12 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [hhNumber, setHHNumber] = useState("");
+  const [licenseNumber, setLicenseNumber] = useState("");
   const [password, setPassword] = useState("");
 
   const { contract, loading, account } = useSelector((state) => state.doctor);
 
-  //coonect to network
+  //connect to network
   useEffect(() => {
     if (!account) {
       dispatch(connectToDoctor(privateKey, contractAddress, contractABI));
@@ -43,26 +43,26 @@ const Login = () => {
       return;
     }
 
-    if (!hhNumber.trim() || !password.trim()) {
+    if (!licenseNumber.trim() || !password.trim()) {
       toast.error("Please fill out all fields");
       return;
     }
 
-    if (!/^\d+$/.test(hhNumber)) {
+    if (!/^\d+$/.test(licenseNumber)) {
       toast.error("Security Number must be numeric");
       return;
     }
     try {
       //check if patient is registered
-      const isRegDoc = await contract.isDoctorRegistered(hhNumber);
+      const isRegDoc = await contract.isDoctorRegistered(licenseNumber);
 
       if (isRegDoc) {
-        const isValidPass = await contract.validatePassword(hhNumber, password);
+        const isValidPass = await contract.validatePassword(licenseNumber, password);
 
         //validate address
         const isValidAddress = await contract.validateAddress(
           account,
-          hhNumber
+          licenseNumber
         );
 
         if (!isValidAddress) {
@@ -75,16 +75,16 @@ const Login = () => {
           toast.error("Incorrect password!");
         } else {
           // setup user login state
-          dispatch(setUser({ account, hhNumber }));
+          dispatch(setUser({ account, licenseNumber }));
 
           //save user data to local storage
           localStorage.setItem("walletAddress", account);
-          localStorage.setItem("hhNumber", hhNumber);
+          localStorage.setItem("licenseNumber", licenseNumber);
           // alert("Login successfull!");
           toast.success("Doctor registered successfully!");
 
           // redirect to user profile
-          navigate("/doctor/" + hhNumber);
+          navigate("/doctor/" + licenseNumber);
         }
       } else {
         toast.error("You need to register first!");
@@ -132,8 +132,8 @@ const Login = () => {
               </label>
               <input
                 type="text"
-                value={hhNumber}
-                onChange={(e) => setHHNumber(e.target.value)}
+                value={licenseNumber}
+                onChange={(e) => setLicenseNumber(e.target.value)}
                 className="w-full p-2 mt-1 border rounded-md shadow-sm focus:ring-black focus:border-black border-gray-300 outline-none focus:ring-2"
                 placeholder="Enter your security number"
               />

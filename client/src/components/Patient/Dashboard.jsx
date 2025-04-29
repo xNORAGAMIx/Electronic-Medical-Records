@@ -110,6 +110,8 @@ const Dashboard = () => {
       }
       try {
         const patient = await contract.getPatientDetails(hhNumber);
+        console.log(patient);
+        
         setPatientDetails(patient);
       } catch (err) {
         console.log(err);

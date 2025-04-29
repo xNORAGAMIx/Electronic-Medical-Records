@@ -10,6 +10,8 @@ import Dashboard from "./components/Patient/Dashboard";
 // Doctor Components
 import RegistrationDoctor from "./components/Doctor/Registration";
 import LoginDoctor from "./components/Doctor/Login";
+import DashboardDoctor from "./components/Doctor/Dashboard";
+import Prescribe from "./pages/Prescribe";
 
 import Header from "./components/Header";
 import Homepage from "./pages/Homepage";
@@ -19,7 +21,8 @@ import Doctors from "./pages/Doctors";
 import LoginPage from "./components/Login";
 import RegisterPage from "./components/Register";
 import PrivateRoute from "./components/PrivateRoute";
-import Appointments from "./pages/Appointments";
+import AppointmentsPatients from "./pages/AppointmentsPatients";
+import AppointmentDoctor from "./pages/AppointmentDoctor";
 
 const App = () => {
   return (
@@ -46,7 +49,7 @@ const App = () => {
           path="/patient-appointments"
           element={
             <PrivateRoute>
-              <Appointments />
+              <AppointmentsPatients />
             </PrivateRoute>
           }
         />
@@ -55,13 +58,30 @@ const App = () => {
         <Route path="/doctor-register" element={<RegistrationDoctor />} />
         <Route path="/doctor-login" element={<LoginDoctor />} />
         <Route
-          path="doctor/:hhNumber"
+          path="doctor/:licenseNumber"
           element={
             <PrivateRoute>
-              <Dashboard />
+              <DashboardDoctor />
             </PrivateRoute>
           }
         />
+        <Route
+          path="/doctor-appointments"
+          element={
+            <PrivateRoute>
+              <AppointmentDoctor />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/prescribe/:patientWallet"
+          element={
+            <PrivateRoute>
+              <Prescribe />
+            </PrivateRoute>
+          }
+        />
+        
 
         {/* Doctor List - Public */}
         <Route path="/doctor-list/:hospitalName" element={<Doctors />} />
