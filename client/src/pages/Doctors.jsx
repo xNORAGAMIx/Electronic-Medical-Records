@@ -1,4 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { FaUserInjured } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 import {
@@ -147,7 +150,6 @@ const Doctors = () => {
   }
 
   const handleBooking = async (doctorNumber) => {
-    
     if (!isLoggedIn) {
       toast.error("You need to login first!");
       return;
@@ -160,9 +162,13 @@ const Doctors = () => {
     const selectedDate = new Date();
     const appointmentDate = getDateTimestamp(selectedDate);
     try {
-      const isBooked = await appointmentContract.isAlreadyBooked(hhNumber, doctorNumber, appointmentDate);
+      const isBooked = await appointmentContract.isAlreadyBooked(
+        hhNumber,
+        doctorNumber,
+        appointmentDate
+      );
 
-      if(isBooked) {
+      if (isBooked) {
         toast.error("You have already booked an appointment!");
         return;
       }
@@ -187,42 +193,40 @@ const Doctors = () => {
 
   return (
     <>
-      <div className="max-w-3xl mx-auto bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-lg overflow-hidden">
-        <div className="p-8">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl font-bold text-blue-800">
+      <div className="text-center mb-12 mt-12">
+        <h1 className="text-3xl md:text-4xl font-bold text-[#0a0f2c] mb-3">
+          Doctors <span className="text-cyan-400">Available</span>
+        </h1>
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          View and book appointment with doctors for your medical needs
+        </p>
+      </div>
+      <div className="max-w-4xl mx-auto bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden">
+        <div className="p-6 bg-gradient-to-r from-[#0a0f2c] to-[#1a1f3c]">
+          <div className="flex justify-between items-center">
+            <h2 className="text-xl font-semibold text-white">
               Find Your Healthcare Specialist
             </h2>
-            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-              <svg
-                className="h-6 w-6 text-blue-600"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"
-                />
-              </svg>
+            <div className="bg-cyan-500 text-white p-3 rounded-lg">
+              <FaUserInjured className="text-xl" />
             </div>
           </div>
+        </div>
 
+        <div className="p-6">
           {/* Search Input */}
           <div className="mb-8">
             <div className="relative">
               <input
                 type="text"
-                className="block w-full pl-5 pr-12 py-4 text-lg border-0 rounded-xl shadow-sm focus:ring-4 focus:ring-blue-200 focus:ring-opacity-50 bg-white"
+                className="block w-full pl-5 pr-12 py-4 text-lg border-0 rounded-xl shadow-sm focus:ring-4 focus:ring-cyan-200 focus:ring-opacity-50 bg-gray-50"
                 placeholder="Search by name, specialization, or condition..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
               <div className="absolute inset-y-0 right-0 pr-5 flex items-center">
                 <svg
-                  className="h-6 w-6 text-blue-400"
+                  className="h-6 w-6 text-cyan-500"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -240,15 +244,17 @@ const Doctors = () => {
           {filteredDoctors.length > 0 ? (
             <ul className="space-y-6">
               {filteredDoctors.map((doctor, index) => (
-                <li
+                <motion.li
                   key={index}
+                  whileHover={{ y: -3 }}
+                  whileTap={{ scale: 0.98 }}
                   className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-200 hover:shadow-lg"
                 >
-                  <div className="p-6">
+                  <div className="p-5">
                     <div className="flex items-start space-x-5">
                       {/* Doctor Avatar */}
                       <div className="flex-shrink-0">
-                        <div className="h-16 w-16 rounded-full bg-blue-100 flex items-center justify-center text-blue-800 text-2xl font-bold">
+                        <div className="h-16 w-16 rounded-full bg-cyan-100 flex items-center justify-center text-cyan-800 text-2xl font-bold">
                           {doctor.name.charAt(0)}
                         </div>
                       </div>
@@ -256,10 +262,10 @@ const Doctors = () => {
                       {/* Doctor Info */}
                       <div className="flex-1 min-w-0 space-y-2">
                         <div className="flex items-baseline">
-                          <h3 className="text-xl font-semibold text-gray-900">
+                          <h3 className="text-lg font-semibold text-[#0a0f2c]">
                             {doctor.name}
                           </h3>
-                          <span className="ml-3 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                          <span className="ml-3 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
                             {doctor.specialization}
                           </span>
                         </div>
@@ -267,7 +273,7 @@ const Doctors = () => {
                         <div className="flex flex-wrap gap-2 text-sm">
                           <div className="flex items-center text-gray-600">
                             <svg
-                              className="h-4 w-4 mr-1 text-blue-400"
+                              className="h-4 w-4 mr-1 text-cyan-500"
                               fill="currentColor"
                               viewBox="0 0 20 20"
                             >
@@ -279,7 +285,7 @@ const Doctors = () => {
 
                           <div className="flex items-center text-gray-600">
                             <svg
-                              className="h-4 w-4 mr-1 text-blue-400"
+                              className="h-4 w-4 mr-1 text-cyan-500"
                               fill="currentColor"
                               viewBox="0 0 20 20"
                             >
@@ -295,7 +301,7 @@ const Doctors = () => {
 
                         <div className="flex items-center text-sm text-gray-500">
                           <svg
-                            className="h-4 w-4 mr-1 text-blue-400"
+                            className="h-4 w-4 mr-1 text-cyan-500"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >
@@ -314,38 +320,26 @@ const Doctors = () => {
                       {/* Action Button */}
                       <div className="flex flex-col items-end space-y-3">
                         <button
-                          onClick={() => {
-                            handleBooking(doctor.hhNumber);
-                          }}
-                          className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 cursor-pointer"
+                          onClick={() => handleBooking(doctor.hhNumber)}
+                          className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-gradient-to-r from-cyan-600 to-cyan-500 hover:from-cyan-700 hover:to-cyan-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition-all duration-200 cursor-pointer"
                         >
                           Book Appointment
                         </button>
                       </div>
                     </div>
                   </div>
-                </li>
+                </motion.li>
               ))}
             </ul>
           ) : (
             <div className="text-center py-12">
-              <svg
-                className="mx-auto h-16 w-16 text-gray-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1}
-                  d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <h3 className="mt-4 text-lg font-medium text-gray-900">
+              <div className="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                <FaUserInjured className="text-gray-400 text-3xl" />
+              </div>
+              <h3 className="text-xl font-medium text-gray-700 mb-2">
                 No doctors found
               </h3>
-              <p className="mt-2 text-gray-500">
+              <p className="text-gray-500 max-w-md mx-auto">
                 {searchTerm
                   ? `No doctors match "${searchTerm}". Try a different search term.`
                   : "Currently no doctors available. Please check back later."}
