@@ -122,6 +122,7 @@ const Dashboard = () => {
   }, [contract, hhNumber]);
 
   const [getAcc, setGetAcc] = useState("");
+  
   // get file data
   useEffect(() => {
     const getData = async () => {
