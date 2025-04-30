@@ -17,11 +17,11 @@ const developers = [
   },
   {
     name: 'Preeti Gautam',
-    role: 'UI/UX & Smart Contract Developer',
+    role: 'UI/UX, MERN Stack Developer',
     img: '/dev-preeti.jpeg', // Replace with real image URL
     bio: 'Passionate about creating intuitive user experiences and secure smart contracts.',
     links: [
-      { icon: <FaGithub />, url: 'https://github.com/Preeti0411Gautamttps://github.com/preetigautam' },
+      { icon: <FaGithub />, url: 'https://github.com/preeti0411gautam' },
       { icon: <FaLinkedin />, url: 'https://www.linkedin.com/in/preeti-gautam-704179137/' },
       { icon: <FaGlobe />, url: 'https://gautam-preeti-411.vercel.app/' }
     ]
@@ -47,9 +47,9 @@ const About = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            About <span className="text-blue-600">Life Ledger</span>
+            About <span className="text-cyan-400">Life Ledger</span>
           </h2>
-          <div className="w-24 h-1 bg-blue-500 mx-auto mb-8 rounded-full"></div>
+          <div className="w-24 h-1 bg-cyan-400 mx-auto mb-8 rounded-full"></div>
           <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
             <strong className="font-semibold text-gray-800">Life Ledger</strong> is a revolutionary decentralized healthcare platform that leverages <span className="text-blue-500">Blockchain</span> and <span className="text-green-500">IPFS</span> to securely store and manage medical records. Patients have full control over their health data and can share access with doctors using public-key cryptography.
           </p>
@@ -156,13 +156,7 @@ const About = () => {
           transition={{ delay: 0.8 }}
           className="mt-20 text-center"
         >
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Want to learn more about our technology?</h3>
-          <a
-            href="#"
-            className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg shadow-md transition-all duration-300 transform hover:scale-105"
-          >
-            View Our Documentation
-          </a>
+ 
         </motion.div>
       </div>
     </section>

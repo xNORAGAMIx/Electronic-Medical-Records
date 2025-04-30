@@ -83,9 +83,9 @@ const Services = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Our <span className="text-blue-600">Services</span>
+            Our <span className="text-cyan-400">Services</span>
           </h2>
-          <div className="w-20 h-1 bg-blue-500 mx-auto mb-6"></div>
+          <div className="w-20 h-1 bg-cyan-400 mx-auto mb-6"></div>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Empowering patients and doctors with secure blockchain and
             IPFS-based healthcare solutions that prioritize privacy and
@@ -131,12 +131,7 @@ const Services = () => {
           transition={{ delay: 0.8 }}
           className="mt-16 text-center"
         >
-          <p className="text-gray-600 mb-6">
-            Ready to experience the future of healthcare?
-          </p>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg shadow-md transition-all duration-300 transform hover:scale-105">
-            Get Started Today
-          </button>
+         
         </motion.div>
       </div>
     </section>
