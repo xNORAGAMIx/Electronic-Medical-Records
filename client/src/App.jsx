@@ -29,6 +29,7 @@ import Prescription from "./pages/Prescription";
 import Footer from "./components/Footer";
 import Contact from "./components/Contact";
 import Services from "./components/Services";
+import About from "./components/About";
 
 
 const App = () => {
@@ -104,6 +105,7 @@ const App = () => {
         <Route path="/doctor-list/:hospitalName" element={<Doctors />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/about" element={<About />} />
       </Routes>
      </main>
       <ToastContainer
