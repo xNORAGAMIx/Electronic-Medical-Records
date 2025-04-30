@@ -23,6 +23,7 @@ import RegisterPage from "./components/Register";
 import PrivateRoute from "./components/PrivateRoute";
 import AppointmentsPatients from "./pages/AppointmentsPatients";
 import AppointmentDoctor from "./pages/AppointmentDoctor";
+import Prescription from "./pages/Prescription";
 
 const App = () => {
   return (
@@ -50,6 +51,14 @@ const App = () => {
           element={
             <PrivateRoute>
               <AppointmentsPatients />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/prescription/:doctorWallet"
+          element={
+            <PrivateRoute>
+              <Prescription />
             </PrivateRoute>
           }
         />
