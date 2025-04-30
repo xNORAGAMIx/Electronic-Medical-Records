@@ -2,6 +2,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import {
+  FiSearch,
+  FiCalendar,
+  FiFilter,
+  FiShare2,
+  FiFileText,
+} from "react-icons/fi";
 
 // Appointment Redux
 import {
@@ -31,17 +38,12 @@ import AppointmentBooking from "../constants/AppointmentBooking.json";
 import DoctorRegistration from "../constants/DoctorRegistration.json";
 import Upload from "../constants/Upload.json";
 
-// setting up constants
-
 const contractAbi = AppointmentBooking.abi;
 const contractAddress = APPOINTMENT_CONTRACT_ADDRESS;
-
 const doctorContractAbi = DoctorRegistration.abi;
 const doctorContractAddress = DOCTOR_CONTRACT_ADDRESS;
-
 const uploadContractAbi = Upload.abi;
 const uploadContractAddress = UPLOAD_CONTRACT_ADDRESS;
-
 const privateKey = PRIVATE_KEY;
 
 const Appointments = () => {
@@ -50,9 +52,11 @@ const Appointments = () => {
 
   // appointment states
   const [appointments, setAppointments] = useState([]);
+  const [filteredAppointments, setFilteredAppointments] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortOrder, setSortOrder] = useState("newest");
 
   // access states
-
   const hhNumber = useSelector((state) => state.user.hhNumber);
 
   // appointment contract
@@ -67,11 +71,9 @@ const Appointments = () => {
   // connect to network
   useEffect(() => {
     dispatch(connectToAppoint(privateKey, contractAddress, contractAbi));
-
     dispatch(
       connectToDoctor(privateKey, doctorContractAddress, doctorContractAbi)
     );
-
     dispatch(
       connectToUpload(privateKey, uploadContractAddress, uploadContractAbi)
     );
@@ -120,6 +122,7 @@ const Appointments = () => {
               return {
                 ...appointment,
                 doctor: doctor,
+                date: new Date(appointment.timestamp * 1000),
               };
             }
             return null;
@@ -127,8 +130,8 @@ const Appointments = () => {
           .filter((item) => item !== null);
 
         setAppointments(combined);
+        setFilteredAppointments(combined);
         toast.success("Appointments fetched successfully!");
-        console.log(combined);
       } catch (err) {
         console.log(err);
         toast.error("Error in fetching appointments.");
@@ -139,13 +142,35 @@ const Appointments = () => {
     }
   }, [contract, doctorContract, hhNumber]);
 
+  // Filter and sort appointments
+  useEffect(() => {
+    let results = appointments;
+
+    // Apply search filter
+    if (searchTerm) {
+      results = results.filter((appointment) =>
+        appointment.doctor.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Apply sorting
+    results = [...results].sort((a, b) => {
+      if (sortOrder === "newest") {
+        return b.timestamp - a.timestamp;
+      } else {
+        return a.timestamp - b.timestamp;
+      }
+    });
+
+    setFilteredAppointments(results);
+  }, [searchTerm, sortOrder, appointments]);
+
   // handle provide access
   const handleShare = async (address) => {
     try {
       const txn = await uploadContract.allow(address);
       await txn.wait();
       toast.success(`Shared access to ${address}`);
-      console.log(`Shared access to ${address}`);
     } catch (err) {
       console.log(err);
       toast.error("Error in sharing access!");
@@ -153,85 +178,158 @@ const Appointments = () => {
   };
 
   // navigate to prescription based on appointment
-  const handlePresriptionNaviagte = (doctorWallet) => {
+  const handlePresriptionNavigate = (doctorWallet) => {
     navigate(`/prescription/${doctorWallet}`);
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">
-        Appointment Records
-      </h1>
+    <div className="max-w-6xl mx-auto p-6">
+      <div className="bg-gradient-to-r from-[#0a0f2c] to-[#1a1f3c] p-6 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+        <h1 className="text-3xl font-bold text-gray-100">
+          Your Appointment Records
+        </h1>
 
-      <div className="space-y-4">
-        {appointments.map((record, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 relative"
-          >
-            <div className="p-6">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-800">
-                    Patient Name - {record.patientId}
-                  </h2>
-                  <p className="text-gray-600">
-                    Timestamp:{" "}
-                    {new Date(record.timestamp * 1000).toLocaleString()}
-                  </p>
-                </div>
-                <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
-                  Doctor ID: {record.doctor.walletAddress}
-                </span>
-              </div>
+        <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+          <div className="relative flex-grow">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FiSearch className="text-gray-900" />
+            </div>
+            <input
+              type="text"
+              placeholder="Search by doctor name..."
+              className="pl-10 pr-4 py-2 w-full bg-white text-gray-900 rounded-lg border border-gray-300 focus:ring-2 shadow-md transition-all outline-none"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
 
-              <div className="border-t border-gray-200 pt-4 mt-4">
-                <h3 className="text-lg font-medium text-gray-800 mb-3">
-                  Doctor Information
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-gray-500">Name</p>
-                    <p className="font-medium">{record.doctor.name}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Specialization</p>
-                    <p className="font-medium">
-                      {record.doctor.specialization}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Hospital</p>
-                    <p className="font-medium">{record.doctor.hospital}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Email</p>
-                    <p className="font-medium">{record.doctor.email}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Action buttons section */}
-              <div className="border-t border-gray-200 pt-4 mt-4 flex justify-end space-x-3">
-                <button
-                  onClick={() => handleShare(record.doctor.walletAddress)}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-                >
-                  Share Access
-                </button>
-                <button
-                  onClick={() => {
-                    handlePresriptionNaviagte(record.doctor.walletAddress);
-                  }}
-                  className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
-                >
-                  See Prescriptions
-                </button>
-              </div>
+          <div className="relative">
+            <select
+              className="appearance-none pl-3 pr-10 py-2 rounded-lg border border-gray-300 focus:ring-2 shadow-md transition-all bg-white"
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
+            >
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+            </select>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <FiFilter className="text-gray-400" />
             </div>
           </div>
-        ))}
+        </div>
       </div>
+
+      {filteredAppointments.length === 0 ? (
+        <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+          <p className="text-gray-500 text-lg">
+            {appointments.length === 0
+              ? "You don't have any appointments yet."
+              : "No appointments match your search."}
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-6">
+          {filteredAppointments.map((record, index) => (
+            <div
+              key={index}
+              className="bg-gradient-to-br from-gray-50 to-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-shadow duration-300"
+            >
+              <div className="p-6">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="p-3 bg-blue-100 rounded-lg">
+                      <FiCalendar className="text-blue-600 text-xl" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Appointment Date</p>
+                      <p className="font-medium text-gray-800">
+                        {record.date.toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {record.date.toLocaleTimeString("en-US", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                  <span className="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full shadow-sm">
+                    Wallet: {record.doctor.walletAddress}
+                  </span>
+                </div>
+
+                <div className="border-t border-gray-100 pt-6">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                    Doctor Information
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="bg-gray-200 p-4 rounded-md">
+                      <p className="text-sm text-gray-500 font-medium">Name</p>
+                      <p className="font-medium text-gray-800">
+                        {record.doctor.name}
+                      </p>
+                    </div>
+                    <div className="bg-gray-200 p-4 rounded-md">
+                      <p className="text-sm text-gray-500 font-medium">
+                        Specialization
+                      </p>
+                      <p className="font-medium text-gray-800">
+                        {record.doctor.specialization}
+                      </p>
+                    </div>
+                    <div className="bg-gray-200 p-4 rounded-md">
+                      <p className="text-sm text-gray-500 font-medium">
+                        Hospital
+                      </p>
+                      <p className="font-medium text-gray-800">
+                        {record.doctor.hospital}
+                      </p>
+                    </div>
+                    <div className="bg-gray-200 p-4 rounded-md">
+                      <p className="text-sm text-gray-500 font-medium">Email</p>
+                      <p className="font-medium text-gray-800 break-all">
+                        {record.doctor.email}
+                      </p>
+                    </div>
+                    <div className="bg-gray-200 p-4 rounded-md">
+                      <p className="text-sm text-gray-500 font-medium">
+                        Wallet Address
+                      </p>
+                      <p className="font-medium text-gray-800 break-all">
+                        {record.doctor.walletAddress}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action buttons section */}
+                <div className="border-t border-gray-100 pt-6 mt-6 flex flex-wrap justify-end gap-3">
+                  <button
+                    onClick={() => handleShare(record.doctor.walletAddress)}
+                    className="flex items-center gap-2 px-4 py-2  text-white rounded-md shadow-sm bg-blue-950 hover:bg-blue-900 cursor-pointer transition-all duration-200"
+                  >
+                    <FiShare2 size={16} />
+                    Share Access
+                  </button>
+                  <button
+                    onClick={() =>
+                      handlePresriptionNavigate(record.doctor.walletAddress)
+                    }
+                    className="flex items-center gap-2 px-4 py-2  text-white rounded-md shadow-sm bg-zinc-900 hover:bg-zinc-700 transition-all duration-200 cursor-pointer"
+                  >
+                    <FiFileText size={16} />
+                    View Prescriptions
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -12,14 +12,14 @@ import {
   FiLogOut,
   FiUserPlus,
   FiCalendar,
-  FiGrid
+  FiGrid,
 } from "react-icons/fi";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-  
+
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const hhNumber = useSelector((state) => state.user.hhNumber);
   const licenseNumber = useSelector((state) => state.user.licenseNumber);
@@ -32,13 +32,14 @@ const Header = () => {
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
-
   return (
     <header className="bg-[#0a0f2c] text-white shadow-md sticky top-0 z-50">
       <div className="container mx-auto flex justify-between items-center px-6 py-4 relative">
-        
         {/* Logo */}
-        <Link to="/" className="text-2xl md:text-3xl font-bold tracking-wide text-cyan-300 hover:text-cyan-400 transition">
+        <Link
+          to="/"
+          className="text-2xl md:text-3xl font-bold tracking-wide text-cyan-300 hover:text-cyan-400 transition"
+        >
           LifeLedger
         </Link>
 
@@ -48,18 +49,29 @@ const Header = () => {
         </button>
 
         {/* Navigation */}
-        <nav className={`absolute md:static w-full md:w-auto top-20 left-0 md:top-0 bg-[#0a0f2c] md:bg-transparent transition-all duration-300 z-40 ${menuOpen ? "block" : "hidden"} md:block`}>
+        <nav
+          className={`absolute md:static w-full md:w-auto top-20 left-0 md:top-0 bg-[#0a0f2c] md:bg-transparent transition-all duration-300 z-40 ${
+            menuOpen ? "block" : "hidden"
+          } md:block`}
+        >
           <ul className="flex flex-col md:flex-row items-center gap-6 md:gap-10 px-6 md:px-0 py-4 md:py-0 text-base font-medium">
-
             <li>
-              <Link to="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 hover:text-cyan-300 transition">
+              <Link
+                to="/"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-2 hover:text-cyan-300 transition"
+              >
                 <FiHome className="text-lg" />
                 Home
               </Link>
             </li>
 
             <li>
-              <Link to="/hospitals" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 hover:text-cyan-300 transition">
+              <Link
+                to="/hospitals"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-2 hover:text-cyan-300 transition"
+              >
                 <FiClipboard className="text-lg" />
                 Hospitals
               </Link>
@@ -68,19 +80,31 @@ const Header = () => {
             {!isLoggedIn ? (
               <>
                 <li>
-                  <Link to="/about" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 hover:text-cyan-300 transition">
+                  <Link
+                    to="/about"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-2 hover:text-cyan-300 transition"
+                  >
                     <FiInfo className="text-lg" />
                     About
                   </Link>
                 </li>
                 <li>
-                  <Link to="/services" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 hover:text-cyan-300 transition">
+                  <Link
+                    to="/services"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-2 hover:text-cyan-300 transition"
+                  >
                     <FiGrid className="text-lg" />
                     Services
                   </Link>
                 </li>
                 <li>
-                  <Link to="/contact" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 hover:text-cyan-300 transition">
+                  <Link
+                    to="/contact"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-2 hover:text-cyan-300 transition"
+                  >
                     <FiPhone className="text-lg" />
                     Contact
                   </Link>
@@ -102,17 +126,17 @@ const Header = () => {
                   {hhNumber ? (
                     <Link
                       to={`/patient-appointments`}
-                      className="hover:text-yellow-400 transition duration-300"
+                      className="hover:text-cyan-300 transition duration-300 flex items-center gap-x-2"
                     >
-                    <FiCalendar className="text-lg" />
+                      <FiCalendar className="space-x-7 text-lg" />
                       Appointments
                     </Link>
                   ) : licenseNumber ? (
                     <Link
                       to={`/doctor-appointments`}
-                      className="hover:text-yellow-400 transition duration-300"
+                      className="hover:text-cyan-300 transition duration-300 flex items-center gap-x-2"
                     >
-                    <FiCalendar className="text-lg" />
+                      <FiCalendar className="text-lg space-x-7" />
                       Appointments
                     </Link>
                   ) : (
@@ -123,17 +147,17 @@ const Header = () => {
                   {hhNumber ? (
                     <Link
                       to={`/patient/${hhNumber}`}
-                      className="hover:text-yellow-400 transition duration-300"
+                      className="hover:text-cyan-300 transition duration-300 flex items-center gap-x-2"
                     >
-                    <FiGrid className="text-lg" />
+                      <FiGrid className="space-x-7 text-lg" />
                       Dashboard
                     </Link>
                   ) : (
                     <Link
                       to={`/doctor/${licenseNumber}`}
-                      className="hover:text-yellow-400 transition duration-300"
+                      className="hover:text-cyan-300 transition duration-300 flex items-center gap-x-2"
                     >
-                    <FiGrid className="text-lg" />
+                      <FiGrid className="space-x-7 text-lg" />
                       Dashboard
                     </Link>
                   )}
@@ -144,9 +168,9 @@ const Header = () => {
                       handleLogout();
                       setMenuOpen(false);
                     }}
-                    className="flex items-center gap-2 bg-rose-500 px-5 py-2 rounded-md hover:bg-rose-600 transition duration-300 shadow"
+                    className="cursor-pointer flex items-center gap-2 bg-rose-500 px-5 py-2 rounded-md hover:bg-rose-600 transition duration-300 shadow"
                   >
-                    <FiLogOut className="text-lg" />
+                    <FiLogOut className="text-lg " />
                     Logout
                   </button>
                 </li>

@@ -1,10 +1,15 @@
-import { FaFacebookF, FaTwitter, FaLinkedinIn, FaEnvelope, FaPhoneAlt } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaLinkedinIn,
+  FaEnvelope,
+  FaPhoneAlt,
+} from "react-icons/fa";
 
 const Footer = () => {
   return (
     <footer className="bg-[#0a0f2c] text-white py-10 px-6 md:px-12">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-        
         {/* About Section */}
         <div>
           <h3 className="text-2xl font-bold mb-4 text-cyan-300">About Us</h3>
@@ -39,21 +44,45 @@ const Footer = () => {
         <div>
           <h3 className="text-2xl font-bold mb-4 text-cyan-300">Contact</h3>
           <p className="flex items-center justify-center md:justify-start gap-2 text-gray-400">
-            <FaEnvelope className="text-cyan-300" /> support@emrapp.com
+            <FaEnvelope className="text-cyan-300" />
+            <a href="mailto:2320403107@stu.manit.ac.in" className="hover:underline">
+            Manas Das
+            </a>
+          </p>
+          <p className="flex items-center justify-center md:justify-start gap-2 text-gray-400">
+            <FaEnvelope className="text-cyan-300" />
+            <a
+              href="mailto:2320403108@stu.manit.ac.in"
+              className="hover:underline"
+            >
+              Preeti Gautam
+            </a>
           </p>
           <p className="flex items-center justify-center md:justify-start gap-2 text-gray-400 mt-2">
-            <FaPhoneAlt className="text-cyan-300" /> +1 (123) 456-7890
+            <FaPhoneAlt className="text-cyan-300" />
+            <a href="tel:+919641752610" className="hover:underline">
+              +91 *****2610
+            </a>
           </p>
 
           {/* Social Media Icons */}
           <div className="flex justify-center md:justify-start gap-4 mt-4">
-            <a href="#" className="text-gray-400 hover:text-cyan-300 transition">
+            <a
+              href="#"
+              className="text-gray-400 hover:text-cyan-300 transition"
+            >
               <FaFacebookF />
             </a>
-            <a href="#" className="text-gray-400 hover:text-cyan-300 transition">
+            <a
+              href="#"
+              className="text-gray-400 hover:text-cyan-300 transition"
+            >
               <FaTwitter />
             </a>
-            <a href="#" className="text-gray-400 hover:text-cyan-300 transition">
+            <a
+              href="#"
+              className="text-gray-400 hover:text-cyan-300 transition"
+            >
               <FaLinkedinIn />
             </a>
           </div>

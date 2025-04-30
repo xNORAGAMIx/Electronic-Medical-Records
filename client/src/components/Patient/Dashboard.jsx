@@ -1,6 +1,26 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
+import {
+  FaShieldAlt,
+  FaLock,
+  FaWallet,
+  FaUser,
+  FaCalendarAlt,
+  FaVenusMars,
+  FaHome,
+  FaTint,
+  FaEnvelope,
+  FaCloudUploadAlt,
+  FaFileMedical,
+  FaFilePdf,
+  FaTimes,
+  FaFolderOpen,
+  FaFileAlt,
+  FaChevronRight,
+} from "react-icons/fa";
 import axios from "axios";
 
 // redux methods
@@ -54,44 +74,20 @@ const Dashboard = () => {
   const [fileName, setFileName] = useState("no file selected");
   const [reports, setReports] = useState([]);
 
-  // access states
-  const [address, setAddress] = useState("");
-  const [addressList, setAddressList] = useState([]);
-
-  // provide access
-  const handleShare = async (e) => {
-    e.preventDefault();
-    try {
-      const txn = await uploadContract.allow(address);
-      await txn.wait();
-      alert(`Shared access to ${address}`);
-      console.log(`Shared access to ${address}`);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  // fetch access list
-  useEffect(() => {
-    const accessList = async () => {
-      const fetchedAddressList = await uploadContract.shareAccess();
-      setAddressList(fetchedAddressList);
-    };
-
-    if (uploadContract) {
-      accessList();
-    }
-  }, [uploadContract]);
-
-  // for access permission
-  const [isModalOpen, setIsModalOpen] = useState(false);
   // patient state
   const [patientDetails, setPatientDetails] = useState("");
 
-  // access form
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
+  // fetch access list
+  // useEffect(() => {
+  //   const accessList = async () => {
+  //     const fetchedAddressList = await uploadContract.shareAccess();
+  //     setAddressList(fetchedAddressList);
+  //   };
+
+  //   if (uploadContract) {
+  //     accessList();
+  //   }
+  // }, [uploadContract]);
 
   // connect to blockchain
   useEffect(() => {
@@ -111,7 +107,7 @@ const Dashboard = () => {
       try {
         const patient = await contract.getPatientDetails(hhNumber);
         console.log(patient);
-        
+
         setPatientDetails(patient);
       } catch (err) {
         console.log(err);
@@ -121,8 +117,6 @@ const Dashboard = () => {
     getDetails();
   }, [contract, hhNumber]);
 
-  const [getAcc, setGetAcc] = useState("");
-  
   // get file data
   useEffect(() => {
     const getData = async () => {
@@ -134,11 +128,7 @@ const Dashboard = () => {
 
       let response;
       try {
-        if (getAcc) {
-          response = await uploadContract.display(getAcc);
-        } else {
-          response = await uploadContract.display(account);
-        }
+        response = await uploadContract.display(account);
       } catch (err) {
         console.log(err);
       }
@@ -189,7 +179,7 @@ const Dashboard = () => {
       }
     };
     getData();
-  }, [account, uploadContract, getAcc]);
+  }, [account, uploadContract]);
 
   // upload file
   const handleSubmitFile = async (e) => {
@@ -249,284 +239,272 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="min-h-screen w-full p-6 bg-gray-200 flex flex-col">
-        {/* Dashboard Main Container */}
-        <div className="flex flex-col justify-center items-center space-y-8">
-          {/* User Information Section */}
-          <div className="bg-white shadow-lg rounded-2xl p-8 space-y-8 w-full max-w-7xl">
-            {/* Profile Header */}
-            <div className="flex flex-col items-center space-y-4">
-              <img
-                src={patientLogo}
-                alt="User Profile"
-                className="w-36 h-36 rounded-full shadow-lg border-4 border-gray-200"
-              />
-              <h2 className="text-3xl font-semibold text-gray-800 border-b-2 pb-2 mt-4">
-                User Information
+      <div className="min-h-screen w-full p-6 bg-gradient-to-br from-blue-50 via-cyan-50 to-purple-50">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+          {/* LEFT: Patient Dashboard */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex-1 bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-2xl overflow-hidden border border-gray-100 p-6"
+          >
+            {/* Profile Header with Gradient Background */}
+            <div className="bg-gradient-to-r from-[#0a0f2c] to-[#1a1f3c] py-8 px-10 text-center rounded-2xl shadow-lg">
+              <div className="relative inline-block mb-4">
+                <img
+                  src={patientLogo}
+                  alt="User Profile"
+                  className="w-32 h-32 rounded-full shadow-2xl border-4 border-cyan-300/30 object-cover"
+                />
+                <div className="absolute -bottom-2 -right-2 bg-gradient-to-tr from-cyan-400 to-blue-500 text-white p-2 rounded-full shadow-lg">
+                  <FaShieldAlt className="text-xl" />
+                </div>
+              </div>
+              <h2 className="mt-4 text-3xl font-bold text-white">
+                Patient <span className="text-cyan-300">Profile</span>
               </h2>
+              <div className="mt-2 h-1 w-20 bg-cyan-400 mx-auto rounded-full"></div>
             </div>
 
             {/* Information Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
               {[
                 {
                   label: "Wallet Address",
                   value: patientDetails.walletAddress,
-                  icon: "💳",
+                  icon: <FaWallet className="text-cyan-500 text-2xl" />,
+                  gradient: "from-cyan-50 to-cyan-100",
+                  border: "border-cyan-200",
                 },
-                { label: "Name", value: patientDetails.name, icon: "🧑" },
+                {
+                  label: "Full Name",
+                  value: patientDetails.name,
+                  icon: <FaUser className="text-purple-500 text-2xl" />,
+                  gradient: "from-purple-50 to-purple-100",
+                  border: "border-purple-200",
+                },
                 {
                   label: "Date of Birth",
                   value: patientDetails.dateOfBirth,
-                  icon: "🎂",
+                  icon: <FaCalendarAlt className="text-blue-500 text-2xl" />,
+                  gradient: "from-blue-50 to-blue-100",
+                  border: "border-blue-200",
                 },
-                { label: "Gender", value: patientDetails.gender, icon: "🚻" },
                 {
-                  label: "Address",
+                  label: "Gender",
+                  value: patientDetails.gender,
+                  icon: <FaVenusMars className="text-pink-500 text-2xl" />,
+                  gradient: "from-pink-50 to-pink-100",
+                  border: "border-pink-200",
+                },
+                {
+                  label: "Physical Address",
                   value: patientDetails.homeAddress,
-                  icon: "🏠",
+                  icon: <FaHome className="text-green-500 text-2xl" />,
+                  gradient: "from-green-50 to-green-100",
+                  border: "border-green-200",
                 },
                 {
                   label: "Blood Group",
                   value: patientDetails.bloodGroup,
-                  icon: "🩸",
+                  icon: <FaTint className="text-red-500 text-2xl" />,
+                  gradient: "from-red-50 to-red-100",
+                  border: "border-red-200",
                 },
-                { label: "Email", value: patientDetails.email, icon: "📧" },
+                {
+                  label: "Email Address",
+                  value: patientDetails.email,
+                  icon: <FaEnvelope className="text-yellow-500 text-2xl" />,
+                  gradient: "from-yellow-50 to-yellow-100",
+                  border: "border-yellow-200",
+                },
               ].map((item, index) => (
-                <div
+                <motion.div
                   key={index}
-                  className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg shadow-sm hover:bg-gray-100 transition"
+                  whileHover={{
+                    y: -5,
+                    boxShadow: "0 15px 30px -10px rgba(0, 0, 0, 0.1)",
+                  }}
+                  className={`bg-gradient-to-br ${item.gradient} rounded-xl p-6 border ${item.border} shadow-md transition-all duration-300`}
                 >
-                  <span className="text-2xl text-gray-600">{item.icon}</span>
-                  <div>
-                    <p className="text-md font-medium text-gray-500">
-                      {item.label}
-                    </p>
-                    <p className="text-lg text-gray-800 font-semibold">
-                      {item.value}
-                    </p>
+                  <div className="flex items-start space-x-5">
+                    <div
+                      className={`p-4 bg-white rounded-lg shadow-md ${item.border}`}
+                    >
+                      {item.icon}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                        {item.label}
+                      </p>
+                      <p
+                        className={`text-lg font-semibold ${
+                          item.label === "Wallet Address"
+                            ? "text-cyan-700 font-mono text-sm"
+                            : "text-gray-800"
+                        } break-all`}
+                      >
+                        {item.value || (
+                          <span className="text-gray-400">Not specified</span>
+                        )}
+                      </p>
+                    </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Report Upload and Uploaded Reports Section */}
-          <div className="bg-white shadow-lg rounded-xl p-8 space-y-8 w-full max-w-7xl">
-            {/* Report Upload Section */}
-            {uploadLoading ? (
-              <div className="flex items-center justify-center space-x-2 text-lg font-semibold text-gray-700">
-                <svg
-                  className="animate-spin h-5 w-5 text-blue-500"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                    fill="none"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8v8H4z"
-                  ></path>
-                </svg>
-                <span>Uploading report...</span>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmitFile} className="space-y-6">
-                <h2 className="text-3xl font-semibold text-gray-800 mb-6 border-b pb-4 flex items-center">
-                  <span className="mr-2">📄</span> Upload Report
-                </h2>
-
-                {/* File Upload Box */}
-                <label
-                  htmlFor="file-upload"
-                  className="w-full flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-700 rounded-lg cursor-pointer hover:bg-gray-100 transition"
-                >
-                  <svg
-                    className="h-12 w-12 text-gray-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M7 16V12M12 16V8m5 8V4m-7 12l-2-2m0 0l-2 2m2-2v6m4-6l2-2m0 0l2 2m-2-2v6"
-                    />
-                  </svg>
-                  <p className="text-gray-600 mt-2">
-                    Click to upload or drag & drop
-                  </p>
-                  <input
-                    id="file-upload"
-                    type="file"
-                    disabled={uploadLoading}
-                    onChange={retrieveFile}
-                    className="hidden"
-                  />
-                </label>
-
-                {/* Selected File Preview */}
-                {fileName && (
-                  <div className="bg-gray-100 p-3 rounded-lg flex items-center justify-between">
-                    <span className="text-gray-700 text-sm">{fileName}</span>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setFile(null);
-                        setFileName("No file selected!");
-                      }}
-                      className="text-xl text-red-400 hover:text-red-700 transition cursor-pointer"
-                    >
-                      ❌
-                    </button>
-                  </div>
-                )}
-
-                {/* Upload Button */}
-                <button
-                  type="submit"
-                  disabled={!file}
-                  className={`px-6 py-3 text-white font-bold text-xl rounded-lg transition duration-300  ${
-                    file
-                      ? "bg-black hover:bg-gray-300 hover:text-black cursor-pointer"
-                      : "bg-gray-300 cursor-not-allowed"
-                  }`}
-                >
-                  Upload
-                </button>
-              </form>
-            )}
-
-            {/* Uploaded Reports Section */}
-            <div>
-              <h2 className="text-3xl font-semibold text-gray-800 mb-6 border-b pb-4 flex items-center space-x-2">
-                <span className="text-blue-500">📂</span>
-                <span>Uploaded Reports</span>
+          {/* RIGHT: Upload + Reports */}
+          <div className="flex flex-col flex-1 gap-8">
+            {/* Upload Section */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 flex-1"
+            >
+              <h2 className="text-2xl font-bold text-[#0a0f2c] mb-6 pb-4 border-b border-gray-200 flex items-center">
+                <FaCloudUploadAlt className="text-cyan-500 mr-3" />
+                Upload Medical Report
               </h2>
-              <div className="h-60 overflow-y-auto space-y-4 px-12">
+
+              {/* File Upload Logic */}
+              {uploadLoading ? (
+                <div className="flex flex-col items-center justify-center py-12">
+                  <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-cyan-400 mb-4"></div>
+                  <p className="text-lg font-medium text-gray-700">
+                    Encrypting and uploading your report...
+                  </p>
+                  <p className="text-sm text-gray-500 mt-2">
+                    This may take a few moments
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmitFile} className="space-y-6">
+                  <label
+                    htmlFor="file-upload"
+                    className="group relative flex flex-col items-center justify-center p-8 border-2 border-dashed border-cyan-300 rounded-xl cursor-pointer hover:bg-cyan-50 transition"
+                  >
+                    <div className="p-4 mb-3 bg-cyan-100 rounded-full group-hover:bg-cyan-200 transition">
+                      <FaFileMedical className="text-cyan-500 text-3xl" />
+                    </div>
+                    <p className="text-lg text-gray-700 mb-1">
+                      Drag & drop files here
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      or click to browse (PDF, JPG, PNG)
+                    </p>
+                    <input
+                      id="file-upload"
+                      type="file"
+                      disabled={uploadLoading}
+                      onChange={retrieveFile}
+                      className="hidden"
+                    />
+                  </label>
+
+                  {fileName && (
+                    <div className="bg-gray-50 p-4 rounded-lg flex items-center justify-between border border-gray-200">
+                      <div className="flex items-center space-x-3">
+                        <FaFilePdf className="text-red-500 text-xl" />
+                        <span className="font-medium text-gray-800 truncate max-w-xs">
+                          {fileName}
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setFile(null);
+                          setFileName("");
+                        }}
+                        className="text-gray-400 hover:text-red-500 transition"
+                      >
+                        <FaTimes />
+                      </button>
+                    </div>
+                  )}
+
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    type="submit"
+                    disabled={!file}
+                    className={`w-full py-4 text-lg font-bold rounded-xl transition-all ${
+                      file
+                        ? "bg-gradient-to-r from-cyan-400 to-blue-500 text-[#0a0f2c] shadow-md hover:shadow-lg"
+                        : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                    }`}
+                  >
+                    <FaLock className="inline mr-2" />
+                    Secure Upload
+                  </motion.button>
+                </form>
+              )}
+            </motion.div>
+
+            {/* Uploaded Reports */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 flex-1"
+            >
+              <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
+                <h2 className="text-2xl font-bold text-[#0a0f2c] flex items-center">
+                  <FaFolderOpen className="text-purple-400 mr-3" />
+                  Medical Reports
+                </h2>
+                <span className="bg-cyan-100 text-cyan-800 text-sm font-medium px-3 py-1 rounded-full">
+                  {reports.length} files
+                </span>
+              </div>
+
+              <div className="h-96 overflow-y-auto pr-2">
                 {reports.length > 0 ? (
-                  <ul className="space-y-4">
-                    {Array.isArray(reports) &&
-                      reports.map((report, index) => (
-                        <li
-                          key={index}
-                          className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-100 to-gray-300 rounded-lg shadow-lg hover:scale-105 hover:shadow-xl transition transform duration-300"
-                        >
-                          <div className="flex items-center space-x-3">
-                            <span className="text-xl text-blue-600">📄</span>
-                            <span className="text-lg font-bold text-black">
-                              {report}
-                            </span>
+                  <ul className="space-y-3">
+                    {reports.map((report, index) => (
+                      <motion.li
+                        key={index}
+                        whileHover={{ x: 5 }}
+                        className="group"
+                      >
+                        <div className="flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-lg border border-gray-200 transition cursor-pointer">
+                          <div className="flex items-center space-x-4">
+                            <div className="p-3 bg-purple-100 rounded-lg text-purple-600">
+                              <FaFileAlt />
+                            </div>
+                            <div>
+                              <p className="font-medium text-gray-800">
+                                {report}
+                              </p>
+                              <p className="text-sm text-gray-500">
+                                Uploaded on {new Date().toLocaleDateString()}
+                              </p>
+                            </div>
                           </div>
-                        </li>
-                      ))}
+                          <button className="text-gray-400 group-hover:text-cyan-500 transition">
+                            <FaChevronRight />
+                          </button>
+                        </div>
+                      </motion.li>
+                    ))}
                   </ul>
                 ) : (
-                  <p className="text-gray-500 text-center animate-pulse">
-                    No reports uploaded yet.
-                  </p>
+                  <div className="flex flex-col items-center justify-center h-64 text-center">
+                    <FaFolderOpen className="text-gray-300 text-5xl mb-4" />
+                    <h3 className="text-xl font-medium text-gray-500 mb-2">
+                      No reports yet
+                    </h3>
+                    <p className="text-gray-400 max-w-md">
+                      Upload your first medical report to get started. All files
+                      are securely stored on the blockchain.
+                    </p>
+                  </div>
                 )}
               </div>
-            </div>
-
-            {/* Grant Permission Button */}
-            <button
-              onClick={toggleModal}
-              className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition cursor-pointer duration-300"
-            >
-              Grant Permission
-            </button>
-
-            {/* Modal for Granting Permission */}
-            {isModalOpen && (
-              <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50 backdrop-blur-lg">
-                <div className="bg-white p-8 rounded-xl w-full max-w-xl space-y-6 shadow-xl">
-                  <h3 className="text-2xl font-semibold text-gray-800 mb-4">
-                    Grant Permission
-                  </h3>
-                  <form onSubmit={handleShare}>
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <label
-                          className="text-sm font-medium text-gray-600"
-                          htmlFor="name"
-                        >
-                          Address
-                        </label>
-                        <input
-                          value={address}
-                          type="text"
-                          id="name"
-                          onChange={(e) => setAddress(e.target.value)}
-                          className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label
-                          className="text-sm font-medium text-gray-600"
-                          htmlFor="email"
-                        >
-                          Email
-                        </label>
-                        <input
-                          type="email"
-                          id="email"
-                          className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                      </div>
-
-                      <select
-                        id="selectNumber"
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      >
-                        <option>People With Access</option>
-                        {addressList.map((opt, index) => (
-                          <option key={index} value={opt}>
-                            {opt}
-                          </option>
-                        ))}
-                      </select>
-
-                      <div className="flex justify-end space-x-4">
-                        <button
-                          type="button"
-                          onClick={toggleModal}
-                          className="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          type="submit"
-                          className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                        >
-                          Submit
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            )}
+            </motion.div>
           </div>
         </div>
       </div>
-
-      <input
-        className="text-black"
-        type="text"
-        value={getAcc}
-        placeholder="Enter here"
-        onChange={(e) => setGetAcc(e.target.value)}
-      />
     </>
   );
 };

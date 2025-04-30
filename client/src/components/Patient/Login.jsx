@@ -1,6 +1,14 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  FaUserInjured,
+  FaShieldAlt,
+  FaLock,
+  FaArrowRight,
+} from "react-icons/fa";
 
 //redux
 import { connectToBlockchain } from "../../redux/contract/blockchainSlice";
@@ -109,73 +117,140 @@ const Login = () => {
     return <div>Loading blockchain connection...</div>;
   }
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-[#ebf0f6] to-[#e6f0ff] p-4">
-      <div className="flex bg-white rounded-2xl shadow-lg overflow-hidden w-full max-w-4xl -mt-20">
-        {/* Left Side - Image */}
-        <div className="hidden md:block w-1/2 bg-gray-200">
-          <img
-            src={reception}
-            alt="Login Illustration"
-            className="object-cover w-full h-full"
-          />
-        </div>
-
-        {/* Right Side - Form */}
-        <div className="w-full md:w-1/2 p-8 space-y-6 bg-gradient-to-b from-[#f5f6f7] to-[#e6f0ff]">
-          <h1 className="text-2xl font-bold text-center text-gray-800">
-            Patient Login
-          </h1>
-          <h3 className="text-center text-sm text-gray-500">
-            Connected as: {account}
-          </h3>
-
-          <form onSubmit={handleLogin} className="space-y-4" autoComplete="off">
-            <div>
-              <label
-                htmlFor="securityNumber"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Security Number
-              </label>
-              <input
-                type="text"
-                value={hhNumber}
-                onChange={(e) => setHHNumber(e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md shadow-sm focus:ring-black focus:border-black border-gray-300 outline-none focus:ring-2"
-                placeholder="Enter your security number"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-2 mt-1 border rounded-md shadow-sm focus:ring-black focus:border-black border-gray-300 outline-none focus:ring-2"
-                placeholder="Enter your password"
-              />
-            </div>
-            <button
-              disabled={loading}
-              type="submit"
-              className="w-full p-3 mt-4 text-white text-lg font-bold bg-black rounded-xl hover:bg-gray-300 hover:text-black transition duration-300 focus:ring-2 focus:ring-gray-400 cursor-pointer"
-            >
-              {loading ? "Loading..." : "Login"}
-            </button>
-            <p className="px-2 text-gray-500">
-              Don't have an account?{" "}
-              <Link className="text-blue-400" to="/patient-register">
-                Register
-              </Link>
-            </p>
-          </form>
-        </div>
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 overflow-hidden -z-10 opacity-10">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-cyan-300 rounded-full mix-blend-screen filter blur-[100px] opacity-20 animate-float"></div>
+        <div className="absolute bottom-1/3 right-1/3 w-64 h-64 bg-purple-300 rounded-full mix-blend-screen filter blur-[100px] opacity-20 animate-float-delay"></div>
       </div>
+
+      {loading ? (
+        <div className="flex justify-center items-center min-h-screen">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-cyan-400"></div>
+          <p className="text-lg font-medium ml-4 text-[#0a0f2c]">
+            Connecting to blockchain...
+          </p>
+        </div>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col md:flex-row w-full max-w-6xl bg-white rounded-2xl shadow-2xl overflow-hidden"
+        >
+          {/* Image Section - Full Height */}
+          <div className="hidden md:block md:w-1/2 bg-gradient-to-br from-[#0a0f2c] to-[#1a1f3c] relative">
+            <img
+              src={reception}
+              alt="Secure Medical Login"
+              className="absolute inset-0 w-full h-full object-cover opacity-100"
+            />
+            {/* <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f2c] to-transparent"></div>
+            <div className="relative z-10 p-12 h-full flex flex-col justify-end">
+              <h2 className="text-4xl font-bold text-white mb-4">
+                Welcome Back to{" "}
+                <span className="text-cyan-300">LifeLedger</span>
+              </h2>
+              <p className="text-gray-300 text-lg">
+                Access your secure medical records anytime, anywhere.
+              </p>
+              <div className="mt-8 space-y-4">
+                {[
+                  {
+                    icon: <FaShieldAlt className="text-cyan-300" />,
+                    text: "Military-grade encryption",
+                  },
+                  {
+                    icon: <FaLock className="text-purple-300" />,
+                    text: "Patient-controlled access",
+                  },
+                  {
+                    icon: <FaUserInjured className="text-blue-300" />,
+                    text: "24/7 availability",
+                  },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center">
+                    <span className="mr-3">{item.icon}</span>
+                    <span className="text-gray-300">{item.text}</span>
+                  </div>
+                ))}
+              </div>
+            </div> */}
+          </div>
+
+          {/* Form Section */}
+          <div className="w-full md:w-1/2 p-8 md:p-12">
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold text-[#0a0f2c]">
+                Patient <span className="text-cyan-400">Login</span>
+              </h1>
+              <p className="text-gray-600 mt-2">
+                Connected as:{" "}
+                <span className="font-mono text-sm">
+                  {account?.slice(0, 12)}...
+                </span>
+              </p>
+            </div>
+
+            <form onSubmit={handleLogin} className="space-y-6">
+              {/* Security Number Field */}
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <FaShieldAlt className="text-gray-400" />
+                </div>
+                <input
+                  type="text"
+                  value={hhNumber}
+                  onChange={(e) => setHHNumber(e.target.value)}
+                  placeholder="Security Number"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-300 focus:border-transparent"
+                />
+              </div>
+
+              {/* Password Field */}
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <FaLock className="text-gray-400" />
+                </div>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-300 focus:border-transparent"
+                />
+              </div>
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                type="submit"
+                className="w-full py-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-[#0a0f2c] font-bold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center"
+              >
+                Login <FaArrowRight className="ml-2" />
+              </motion.button>
+
+              <div className="text-center">
+                <p className="text-gray-600">
+                  Don't have an account?{" "}
+                  <Link
+                    to="/patient-register"
+                    className="text-cyan-500 hover:underline font-medium"
+                  >
+                    Register here
+                  </Link>
+                </p>
+                <Link
+                  to="/forgot-password"
+                  className="text-sm text-gray-500 hover:text-cyan-500 mt-2 inline-block"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+            </form>
+          </div>
+        </motion.div>
+      )}
     </div>
   );
 };
