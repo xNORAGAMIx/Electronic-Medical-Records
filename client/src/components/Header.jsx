@@ -19,8 +19,10 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const hhNumber = localStorage.getItem("hhNumber");
+  const hhNumber = useSelector((state) => state.user.hhNumber);
+  const licenseNumber = useSelector((state) => state.user.licenseNumber);
 
   const handleLogout = () => {
     dispatch(clearUser());
@@ -29,6 +31,7 @@ const Header = () => {
   };
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
+
 
   return (
     <header className="bg-[#0a0f2c] text-white shadow-md sticky top-0 z-50">
@@ -96,24 +99,44 @@ const Header = () => {
             ) : (
               <>
                 <li>
-                  <Link
-                    to="/patient-appointments"
-                    onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-2 hover:text-cyan-300 transition"
-                  >
+                  {hhNumber ? (
+                    <Link
+                      to={`/patient-appointments`}
+                      className="hover:text-yellow-400 transition duration-300"
+                    >
                     <FiCalendar className="text-lg" />
-                    Appointments
-                  </Link>
+                      Appointments
+                    </Link>
+                  ) : licenseNumber ? (
+                    <Link
+                      to={`/doctor-appointments`}
+                      className="hover:text-yellow-400 transition duration-300"
+                    >
+                    <FiCalendar className="text-lg" />
+                      Appointments
+                    </Link>
+                  ) : (
+                    <></>
+                  )}
                 </li>
                 <li>
-                  <Link
-                    to={`/patient/${hhNumber}`}
-                    onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-2 hover:text-cyan-300 transition"
-                  >
+                  {hhNumber ? (
+                    <Link
+                      to={`/patient/${hhNumber}`}
+                      className="hover:text-yellow-400 transition duration-300"
+                    >
                     <FiGrid className="text-lg" />
-                    Dashboard
-                  </Link>
+                      Dashboard
+                    </Link>
+                  ) : (
+                    <Link
+                      to={`/doctor/${licenseNumber}`}
+                      className="hover:text-yellow-400 transition duration-300"
+                    >
+                    <FiGrid className="text-lg" />
+                      Dashboard
+                    </Link>
+                  )}
                 </li>
                 <li>
                   <button
