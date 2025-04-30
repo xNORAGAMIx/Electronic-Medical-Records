@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 // Appointment Redux
@@ -45,6 +46,7 @@ const privateKey = PRIVATE_KEY;
 
 const Appointments = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // appointment states
   const [appointments, setAppointments] = useState([]);
@@ -150,6 +152,11 @@ const Appointments = () => {
     }
   };
 
+  // navigate to prescription based on appointment
+  const handlePresriptionNaviagte = (doctorWallet) => {
+    navigate(`/prescription/${doctorWallet}`);
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-6">
       <h1 className="text-2xl font-bold text-gray-800 mb-6">
@@ -211,6 +218,14 @@ const Appointments = () => {
                   className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
                 >
                   Share Access
+                </button>
+                <button
+                  onClick={() => {
+                    handlePresriptionNaviagte(record.doctor.walletAddress);
+                  }}
+                  className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+                >
+                  See Prescriptions
                 </button>
               </div>
             </div>
