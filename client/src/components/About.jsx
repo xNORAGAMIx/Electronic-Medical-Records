@@ -10,8 +10,8 @@ const developers = [
     img: '/dev-manas.jpeg', // Replace with real image URL
     bio: 'Specialized in building decentralized applications with React, Node.js, and Solidity.',
     links: [
-      { icon: <FaGithub />, url: 'https://github.com/manasdas' },
-      { icon: <FaLinkedin />, url: 'https://linkedin.com/in/manasdas' },
+      { icon: <FaGithub />, url: 'https://github.com/xNORAGAMIx' },
+      { icon: <FaLinkedin />, url: 'https://www.linkedin.com/in/manas-d-552168146/' },
       { icon: <FaGlobe />, url: 'https://das-manas.vercel.app/' }
     ]
   },
@@ -21,8 +21,8 @@ const developers = [
     img: '/dev-preeti.jpeg', // Replace with real image URL
     bio: 'Passionate about creating intuitive user experiences and secure smart contracts.',
     links: [
-      { icon: <FaGithub />, url: 'https://github.com/preetigautam' },
-      { icon: <FaTwitter />, url: 'https://twitter.com/preetigautam' },
+      { icon: <FaGithub />, url: 'https://github.com/Preeti0411Gautamttps://github.com/preetigautam' },
+      { icon: <FaLinkedin />, url: 'https://www.linkedin.com/in/preeti-gautam-704179137/' },
       { icon: <FaGlobe />, url: 'https://gautam-preeti-411.vercel.app/' }
     ]
   },
