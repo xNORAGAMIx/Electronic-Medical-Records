@@ -163,19 +163,18 @@ const Registration = () => {
             <span>Processing transaction...</span>
           </div>
         ) : (
-          <div className="flex bg-white rounded-2xl shadow-lg overflow-hidden w-full max-w-4xl -mt-20">
-            {/* Left Side - Image */}
-            <div className="hidden md:block w-1/2 bg-gray-200">
+<div className="w-full max-w-2xl bg-gradient-to-b from-[#f8fbff] to-[#e6f0ff]rounded-xl shadow-lg overflow-hidden">            {/* Left Side - Image */}
+            {/* <div className="hidden md:block w-1/2 bg-gray-200">
               <img
                 src={loginImage}
                 alt="Register Illustration"
                 className="object-cover w-full h-full"
               />
-            </div>
+            </div> */}
 
             {/* Right Side - Form */}
-            <div className="w-full md:w-1/2 p-8 space-y-6">
-              <h1 className="text-2xl font-bold text-center text-gray-800">
+            <div className="p-8 bg-gradient-to-b from-[#f9f8fa] to-[#e6f0ff]">
+            <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">
                 Register Doctor
               </h1>
               <h3 className="text-center text-sm text-gray-500">
