@@ -76,6 +76,10 @@ contract PatientRegistration {
     function isRegisteredPatient(string memory _hhNumber) external view returns (bool) {
         return isPatientRegistered[_hhNumber];
     }
+
+    function isRegisteredPatientAddress(address _walletAddress) external view returns (bool) {
+        return isPatientRegisteredAddress[_walletAddress];
+    }
     
     // Add a function to validate patient's password
     function validatePassword(string memory _hhNumber, string memory _password) external view returns (bool) {

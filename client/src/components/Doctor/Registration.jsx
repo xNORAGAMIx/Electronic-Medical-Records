@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import {
   FaLock,
@@ -13,20 +14,38 @@ import {
 } from "react-icons/fa";
 import { toast } from "react-toastify";
 
+// Doctor Redux states
 import {
   connectToDoctor,
   clearDoctorState,
 } from "../../redux/contract/doctorSlice";
 
+// Patient Redux states
+import {
+  connectToBlockchain,
+  clearBlockchainState,
+} from "../../redux/contract/blockchainSlice";
+
+// Contract JSON imports
 import DoctorRegistration from "../../constants/DoctorRegistration.json";
-import { useDispatch, useSelector } from "react-redux";
+import PatientRegistration from "../../constants/PatientRegistration.json";
 
-import { DOCTOR_CONTRACT_ADDRESS, PRIVATE_KEY } from "../../constants/Values";
+// Contract Addresses
+import {
+  DOCTOR_CONTRACT_ADDRESS,
+  PATIENT_CONTRACT_ADDRESS,
+  PRIVATE_KEY,
+} from "../../constants/Values";
 
-import loginImage from "../../../public/5053643.jpg";
+import loginImage from "../../../public/photu.jpg";
 
+// constants initialize
 const contractABI = DoctorRegistration.abi;
 const contractAddress = DOCTOR_CONTRACT_ADDRESS;
+
+const patientContractABI = PatientRegistration.abi;
+const patientContractAddress = PATIENT_CONTRACT_ADDRESS;
+
 const privateKey = PRIVATE_KEY;
 
 const Registration = () => {
@@ -43,6 +62,7 @@ const Registration = () => {
   const [licenseNumber, setLicenseNumber] = useState("");
 
   const { account, contract, loading } = useSelector((state) => state.doctor);
+  const patientContract = useSelector((state) => state.blockchain.contract);
 
   // register loader
   const [waiter, setWaiter] = useState(false);
@@ -50,12 +70,20 @@ const Registration = () => {
   // connect to network
   useEffect(() => {
     dispatch(connectToDoctor(privateKey, contractAddress, contractABI));
+    dispatch(
+      connectToBlockchain(
+        privateKey,
+        patientContractAddress,
+        patientContractABI
+      )
+    );
   }, [dispatch]);
 
   // clear state when component unmounts
   useEffect(() => {
     return () => {
       dispatch(clearDoctorState());
+      dispatch(clearBlockchainState());
     };
   }, [dispatch]);
 
@@ -63,7 +91,7 @@ const Registration = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    if (!contract) {
+    if (!contract || !patientContract) {
       console.log("Contract not initialized");
       return;
     }
@@ -109,8 +137,30 @@ const Registration = () => {
       setWaiter(true);
       const isRegDoc = await contract.isDoctorRegistered(licenseNumber);
 
+      // prevent doctor using same security number as another doctor
       if (isRegDoc) {
         toast.error("Doctor already exists");
+        return;
+      }
+
+      const isRegPat = await patientContract.isRegisteredPatient(licenseNumber);
+
+      // prevent doctor using same security number as patient
+      if (isRegPat) {
+        toast.error(
+          "Account already exists with this security key! Unauthorized."
+        );
+        return;
+      }
+
+      const isAddrPat = await patientContract.isRegisteredPatientAddress(
+        account
+      );
+
+      if (isAddrPat) {
+        toast.error(
+          "Account already exists with this wallet address. Unauthorized!"
+        );
         return;
       }
 
@@ -173,38 +223,8 @@ const Registration = () => {
             <img
               src={loginImage}
               alt="Secure Medical Records"
-              className="absolute inset-0 w-full h-full object-cover opacity-90 mix-blend-luminosity"
+              className="absolute inset-0 w-full h-full object-cover opacity-100"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f2c] to-transparent"></div>
-            <div className="relative z-10 p-12 h-full flex flex-col justify-end">
-              <h2 className="text-4xl font-bold text-white mb-4">
-                <span className="text-cyan-300">Healthcare</span> Professionals
-              </h2>
-              <p className="text-gray-300 text-lg">
-                Join the revolution of blockchain-secured patient records.
-              </p>
-              <div className="mt-8 space-y-4">
-                {[
-                  {
-                    icon: <FaShieldAlt className="text-cyan-300" />,
-                    text: "Military-grade encryption",
-                  },
-                  {
-                    icon: <FaLock className="text-purple-300" />,
-                    text: "HIPAA-compliant security",
-                  },
-                  {
-                    icon: <FaStethoscope className="text-blue-300" />,
-                    text: "Seamless patient access",
-                  },
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center">
-                    <span className="mr-3">{item.icon}</span>
-                    <span className="text-gray-300">{item.text}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
 
           {/* Form Section */}

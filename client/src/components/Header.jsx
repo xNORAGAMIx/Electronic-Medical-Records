@@ -50,7 +50,7 @@ const Header = () => {
 
         {/* Navigation */}
         <nav
-          className={`absolute md:static w-full md:w-auto top-20 left-0 md:top-0 bg-[#0a0f2c] md:bg-transparent transition-all duration-300 z-40 ${
+          className={`absolute md:static w-full md:w-auto top-16 left-0 md:top-0 bg-[#0a1031] md:bg-transparent transition-all duration-300 z-40 ${
             menuOpen ? "block" : "hidden"
           } md:block`}
         >

@@ -12,7 +12,7 @@ import {
   FaHome,
   FaIdCard,
   FaShieldAlt,
-  FaGlobe
+  FaGlobe,
 } from "react-icons/fa";
 import { toast } from "react-toastify";
 
@@ -26,7 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { PATIENT_CONTRACT_ADDRESS, PRIVATE_KEY } from "../../constants/Values";
 
-import loginImage from "../../../public/5053643.jpg";
+import loginImage from "../../../public/photu.jpg";
 
 const contractABI = PatientRegistration.abi;
 const contractAddress = PATIENT_CONTRACT_ADDRESS;
@@ -195,40 +195,8 @@ const Registration = () => {
             <img
               src={loginImage}
               alt="Secure Medical Records"
-              className="absolute inset-0 w-full h-full object-cover opacity-90 mix-blend-luminosity"
+              className="absolute inset-0 w-full h-full object-cover opacity-100"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f2c] to-transparent"></div>
-            <div className="relative z-10 p-12 h-full flex flex-col justify-end">
-              <h2 className="text-4xl font-bold text-white mb-4">
-                Secure Your <span className="text-cyan-300">Medical</span>{" "}
-                Future
-              </h2>
-              <p className="text-gray-300 text-lg">
-                Join thousands who trust LifeLedger for tamper-proof health
-                records on the blockchain.
-              </p>
-              <div className="mt-8 space-y-4">
-                {[
-                  {
-                    icon: <FaShieldAlt className="text-cyan-300" />,
-                    text: "Military-grade encryption",
-                  },
-                  {
-                    icon: <FaLock className="text-purple-300" />,
-                    text: "Patient-controlled access",
-                  },
-                  {
-                    icon: <FaGlobe className="text-blue-300" />,
-                    text: "Global availability",
-                  },
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center">
-                    <span className="mr-3">{item.icon}</span>
-                    <span className="text-gray-300">{item.text}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
 
           {/* Form Section */}
