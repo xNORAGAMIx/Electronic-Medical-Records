@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaTwitter, FaGlobe } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaGlobe } from 'react-icons/fa';
 
 const developers = [
   {
