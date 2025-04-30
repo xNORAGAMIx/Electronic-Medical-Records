@@ -201,6 +201,18 @@ const Prescribe = () => {
     }
   };
 
+  // provide access
+  const handleShare = async (patientWallet) => {
+    try {
+      const tx = await uploadContract.allow(patientWallet);
+      await tx.wait();
+      toast.success(`Shared access to ${patient.name}`);
+    } catch (err) {
+      console.log(err);
+      toast.error(`Error in sharing access.`);
+    }
+  };
+
   return (
     <>
       <div className="max-w-7xl mx-auto p-4 space-y-6">
@@ -300,7 +312,7 @@ const Prescribe = () => {
               <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white">
                 <h2 className="text-2xl font-bold flex items-center space-x-3">
                   <span className="text-white">📂</span>
-                  <span>Uploaded Reports</span>
+                  <span>Patient Reports</span>
                 </h2>
                 <p className="mt-2 opacity-90">
                   Total: <span className="font-semibold">{reports.length}</span>{" "}
@@ -418,7 +430,15 @@ const Prescribe = () => {
                       d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"
                     />
                   </svg>
-                  Upload Medical Report
+                  Upload Medical Report{" "}
+                  <button
+                    className="cursor-pointer text-red-400"
+                    onClick={() => {
+                      handleShare(patientWallet);
+                    }}
+                  >
+                    Share
+                  </button>
                 </h2>
               </div>
 
