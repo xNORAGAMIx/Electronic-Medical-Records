@@ -5,7 +5,7 @@ const Contact = () => {
     <div className="flex-1 max-w-4xl mx-auto p-10">
       <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
         {/* Header */}
-        <div className="bg-blue-950 text-white p-5">
+        <div className="p-6 bg-gradient-to-r from-[#0a0f2c] to-[#1a1f3c] text-white">
           <h2 className="text-2xl font-semibold">Contact Us</h2>
           <p className="text-indigo-100 mt-1">We&apos;d love to hear from you.</p>
         </div>
@@ -46,7 +46,7 @@ const Contact = () => {
             </div>
             <button
               type="submit"
-              className="bg-blue-950 text-white px-6 py-2 rounded-lg hover:bg-blue-900 transition-colors duration-200 shadow-sm"
+              className="p-6 bg-gradient-to-r from-[#0a0f2c] to-[#1a1f3c] text-white px-6 py-2 rounded-lg hover:bg-blue-900 transition-colors duration-200 shadow-sm"
             >
               Send Message
             </button>
