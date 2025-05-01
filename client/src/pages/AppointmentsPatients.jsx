@@ -38,13 +38,13 @@ import AppointmentBooking from "../constants/AppointmentBooking.json";
 import DoctorRegistration from "../constants/DoctorRegistration.json";
 import Upload from "../constants/Upload.json";
 
+// constants setup
 const contractAbi = AppointmentBooking.abi;
 const contractAddress = APPOINTMENT_CONTRACT_ADDRESS;
 const doctorContractAbi = DoctorRegistration.abi;
 const doctorContractAddress = DOCTOR_CONTRACT_ADDRESS;
 const uploadContractAbi = Upload.abi;
 const uploadContractAddress = UPLOAD_CONTRACT_ADDRESS;
-const privateKey = PRIVATE_KEY;
 
 const Appointments = () => {
   const dispatch = useDispatch();
@@ -71,12 +71,8 @@ const Appointments = () => {
   // connect to network
   useEffect(() => {
     dispatch(connectToAppoint(contractAddress, contractAbi));
-    dispatch(
-      connectToDoctor(doctorContractAddress, doctorContractAbi)
-    );
-    dispatch(
-      connectToUpload(uploadContractAddress, uploadContractAbi)
-    );
+    dispatch(connectToDoctor(doctorContractAddress, doctorContractAbi));
+    dispatch(connectToUpload(uploadContractAddress, uploadContractAbi));
   }, [dispatch]);
 
   // clear state on component unmount

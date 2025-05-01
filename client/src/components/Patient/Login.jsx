@@ -3,11 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import {
-  FaShieldAlt,
-  FaLock,
-  FaArrowRight,
-} from "react-icons/fa";
+import { FaShieldAlt, FaLock, FaArrowRight } from "react-icons/fa";
 
 // redux (Patient + User)
 import { connectToBlockchain } from "../../redux/contract/blockchainSlice";
@@ -109,7 +105,14 @@ const Login = () => {
 
   // contract loading
   if (loading) {
-    return <div>Loading blockchain connection...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+        <p className="text-lg font-medium ml-4">
+          Connecting to the blockchain...
+        </p>
+      </div>
+    );
   }
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 flex items-center justify-center p-4 relative overflow-hidden">
