@@ -35,7 +35,7 @@ import {
   PATIENT_CONTRACT_ADDRESS,
 } from "../../constants/Values";
 
-import loginImage from "../../../public/photu.jpg";
+import loginImage from "/photu.jpg";
 
 // constants initialize
 const contractABI = DoctorRegistration.abi;

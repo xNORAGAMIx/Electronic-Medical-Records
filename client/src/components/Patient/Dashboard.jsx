@@ -39,7 +39,7 @@ import {
 } from "../../constants/Values";
 
 //image
-import patientLogo from "../../../public/DJV MAR 1012-04.jpg";
+import patientLogo from "/DJV MAR 1012-04.jpg";
 
 // set up constants
 const contractABI = PatientRegistration.abi;
