@@ -4,29 +4,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  FaUserInjured,
   FaShieldAlt,
   FaLock,
   FaArrowRight,
 } from "react-icons/fa";
 
-//redux
+// redux (Patient + User)
 import { connectToBlockchain } from "../../redux/contract/blockchainSlice";
 import { setUser } from "../../redux/user/userSlice";
 
-// contract
+// Contract JSON imports
 import PatientRegistration from "../../constants/PatientRegistration.json";
-import { PATIENT_CONTRACT_ADDRESS, PRIVATE_KEY } from "../../constants/Values";
+import { PATIENT_CONTRACT_ADDRESS } from "../../constants/Values";
 
-import reception from "../../../public/reception.jpg";
+import reception from "/reception.jpg";
 
 // setting up constants
 const contractABI = PatientRegistration.abi;
 const contractAddress = PATIENT_CONTRACT_ADDRESS;
-const privateKey = PRIVATE_KEY;
-
-// 0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d
-// 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
 
 const Login = () => {
   const navigate = useNavigate();
@@ -112,7 +107,7 @@ const Login = () => {
     }
   };
 
-  //contract loading
+  // contract loading
   if (loading) {
     return <div>Loading blockchain connection...</div>;
   }

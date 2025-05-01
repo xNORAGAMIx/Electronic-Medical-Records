@@ -23,17 +23,18 @@ import {
 } from "react-icons/fa";
 import axios from "axios";
 
-// redux methods
+// redux methods (Patient + Upload)
 import { connectToBlockchain } from "../../redux/contract/blockchainSlice";
 import { connectToUpload } from "../../redux/contract/uploadSlice";
 
-// contract data
+// Contract JSON imports
 import PatientRegistration from "../../constants/PatientRegistration.json";
 import Upload from "../../constants/Upload.json";
+
+// Contract address
 import {
   PATIENT_CONTRACT_ADDRESS,
   UPLOAD_CONTRACT_ADDRESS,
-  PRIVATE_KEY,
 } from "../../constants/Values";
 
 //image
@@ -42,7 +43,6 @@ import patientLogo from "../../../public/DJV MAR 1012-04.jpg";
 // set up constants
 const contractABI = PatientRegistration.abi;
 const contractAddress = PATIENT_CONTRACT_ADDRESS;
-const privateKey = PRIVATE_KEY;
 
 const uploadABI = Upload.abi;
 const uploadAddress = UPLOAD_CONTRACT_ADDRESS;
@@ -58,6 +58,14 @@ const Dashboard = () => {
   const uploadContract = useSelector((state) => state.upload.contract);
   const uploadLoading = useSelector((state) => state.upload.loading);
 
+  // upload states
+  const [file, setFile] = useState(null);
+  const [fileName, setFileName] = useState("no file selected");
+  const [reports, setReports] = useState([]);
+
+  // patient state
+  const [patientDetails, setPatientDetails] = useState("");
+
   // get patient id from url and localStorage
   const { hhNumber } = useParams();
   const numberStorage = localStorage.getItem("hhNumber");
@@ -68,26 +76,6 @@ const Dashboard = () => {
       navigate("/patient/" + numberStorage, { replace: true });
     }
   }, [hhNumber, numberStorage, navigate]);
-
-  // upload states
-  const [file, setFile] = useState(null);
-  const [fileName, setFileName] = useState("no file selected");
-  const [reports, setReports] = useState([]);
-
-  // patient state
-  const [patientDetails, setPatientDetails] = useState("");
-
-  // fetch access list
-  // useEffect(() => {
-  //   const accessList = async () => {
-  //     const fetchedAddressList = await uploadContract.shareAccess();
-  //     setAddressList(fetchedAddressList);
-  //   };
-
-  //   if (uploadContract) {
-  //     accessList();
-  //   }
-  // }, [uploadContract]);
 
   // connect to blockchain
   useEffect(() => {
@@ -117,7 +105,7 @@ const Dashboard = () => {
     getDetails();
   }, [contract, hhNumber]);
 
-  // get file data
+  // get uploaded files data
   useEffect(() => {
     const getData = async () => {
       //check first if contract available yet
@@ -221,7 +209,7 @@ const Dashboard = () => {
     setFile(null);
   };
 
-  // get uploaded files
+  // get file to upload
   const retrieveFile = (e) => {
     e.preventDefault();
     const data = e.target.files[0];
@@ -233,9 +221,22 @@ const Dashboard = () => {
     setFileName(e.target.files[0].name);
   };
 
+  // contract loading
   if (loading) {
     return <div>Loading blockchain connection...</div>;
   }
+
+  // fetch access list
+  // useEffect(() => {
+  //   const accessList = async () => {
+  //     const fetchedAddressList = await uploadContract.shareAccess();
+  //     setAddressList(fetchedAddressList);
+  //   };
+
+  //   if (uploadContract) {
+  //     accessList();
+  //   }
+  // }, [uploadContract]);
 
   return (
     <>

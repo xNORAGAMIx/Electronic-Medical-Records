@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import {
   FaUser,
@@ -11,26 +12,27 @@ import {
   FaVenusMars,
   FaHome,
   FaIdCard,
-  FaShieldAlt,
-  FaGlobe,
 } from "react-icons/fa";
 import { toast } from "react-toastify";
 
+// redux patient
 import {
   connectToBlockchain,
   clearBlockchainState,
 } from "../../redux/contract/blockchainSlice";
 
+// contract JSON imports
 import PatientRegistration from "../../constants/PatientRegistration.json";
-import { useDispatch, useSelector } from "react-redux";
 
-import { PATIENT_CONTRACT_ADDRESS, PRIVATE_KEY } from "../../constants/Values";
+// contract address
+import { PATIENT_CONTRACT_ADDRESS } from "../../constants/Values";
 
-import loginImage from "../../../public/photu.jpg";
+// login page
+import loginImage from "/photu.jpg";
 
+// constants setup
 const contractABI = PatientRegistration.abi;
 const contractAddress = PATIENT_CONTRACT_ADDRESS;
-const privateKey = PRIVATE_KEY;
 
 const Registration = () => {
   const dispatch = useDispatch();
