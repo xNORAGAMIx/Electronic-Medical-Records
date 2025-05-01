@@ -16,7 +16,7 @@ import {
 import { connectToDoctor } from "../../redux/contract/doctorSlice";
 
 // contract address
-import { DOCTOR_CONTRACT_ADDRESS, PRIVATE_KEY } from "../../constants/Values";
+import { DOCTOR_CONTRACT_ADDRESS } from "../../constants/Values";
 
 // Doctor contract JSON
 import DoctorRegistration from "../../constants/DoctorRegistration.json";
@@ -24,7 +24,6 @@ import DoctorRegistration from "../../constants/DoctorRegistration.json";
 // initial values
 const contractABI = DoctorRegistration.abi;
 const contractAddress = DOCTOR_CONTRACT_ADDRESS;
-const privateKey = PRIVATE_KEY;
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -32,11 +31,11 @@ const Dashboard = () => {
 
   const { contract } = useSelector((state) => state.doctor);
 
+  // check authorization
   const authNumber = useSelector((state) => state.user.licenseNumber);
   const { licenseNumber } = useParams();
 
-  // const {licenseNumber} = useParams();
-
+  // doctor state
   const [doctorDetails, setDoctorDetails] = useState({});
 
   // connect to network

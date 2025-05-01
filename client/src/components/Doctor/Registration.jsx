@@ -8,7 +8,6 @@ import {
   FaStethoscope,
   FaEnvelope,
   FaIdCard,
-  FaShieldAlt,
   FaUserMd,
   FaHospital,
 } from "react-icons/fa";
@@ -34,7 +33,6 @@ import PatientRegistration from "../../constants/PatientRegistration.json";
 import {
   DOCTOR_CONTRACT_ADDRESS,
   PATIENT_CONTRACT_ADDRESS,
-  PRIVATE_KEY,
 } from "../../constants/Values";
 
 import loginImage from "../../../public/photu.jpg";
@@ -46,7 +44,6 @@ const contractAddress = DOCTOR_CONTRACT_ADDRESS;
 const patientContractABI = PatientRegistration.abi;
 const patientContractAddress = PATIENT_CONTRACT_ADDRESS;
 
-const privateKey = PRIVATE_KEY;
 
 const Registration = () => {
   const dispatch = useDispatch();
@@ -61,6 +58,7 @@ const Registration = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [licenseNumber, setLicenseNumber] = useState("");
 
+  // redux states
   const { account, contract, loading } = useSelector((state) => state.doctor);
   const patientContract = useSelector((state) => state.blockchain.contract);
 

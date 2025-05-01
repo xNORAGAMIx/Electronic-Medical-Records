@@ -4,33 +4,38 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  FaUserMd,
   FaShieldAlt,
   FaLock,
   FaArrowRight,
-  FaHospital,
 } from "react-icons/fa";
 import { toast } from "react-toastify";
 
+// Doctor Redux
 import { connectToDoctor } from "../../redux/contract/doctorSlice";
+// User Redux
 import { setUser } from "../../redux/user/userSlice";
 
+// Contract JSON imports
 import DoctorRegistration from "../../constants/DoctorRegistration.json";
-import { DOCTOR_CONTRACT_ADDRESS, PRIVATE_KEY } from "../../constants/Values";
+// Contract Addresses
+import { DOCTOR_CONTRACT_ADDRESS } from "../../constants/Values";
 
-import image from "../../../public/image.png";
+// login image
+import image from "/image.png";
 
+// initial constants setup
 const contractABI = DoctorRegistration.abi;
 const contractAddress = DOCTOR_CONTRACT_ADDRESS;
-const privateKey = PRIVATE_KEY;
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // login states
   const [licenseNumber, setLicenseNumber] = useState("");
   const [password, setPassword] = useState("");
 
+  // redux states
   const { contract, loading, account } = useSelector((state) => state.doctor);
 
   //connect to network
