@@ -79,7 +79,7 @@ const Doctors = () => {
   // connect to network
   useEffect(() => {
     // doctor dispatch
-    dispatch(connectToDoctor(privateKey, contractAddress, contractABI));
+    dispatch(connectToDoctor(contractAddress, contractABI));
 
     // patient dispatch
     // dispatch(
@@ -93,7 +93,6 @@ const Doctors = () => {
     // appointment dispatch
     dispatch(
       connectToAppoint(
-        privateKey,
         appointmentContractAddress,
         appointmentContractABI
       )

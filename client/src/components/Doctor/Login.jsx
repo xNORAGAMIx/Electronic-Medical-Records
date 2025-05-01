@@ -36,7 +36,7 @@ const Login = () => {
   //connect to network
   useEffect(() => {
     if (!account) {
-      dispatch(connectToDoctor(privateKey, contractAddress, contractABI));
+      dispatch(connectToDoctor(contractAddress, contractABI));
     }
   }, [dispatch, account]);
 

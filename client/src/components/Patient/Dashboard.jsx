@@ -91,8 +91,8 @@ const Dashboard = () => {
 
   // connect to blockchain
   useEffect(() => {
-    dispatch(connectToBlockchain(privateKey, contractAddress, contractABI));
-    dispatch(connectToUpload(privateKey, uploadAddress, uploadABI));
+    dispatch(connectToBlockchain(contractAddress, contractABI));
+    dispatch(connectToUpload(uploadAddress, uploadABI));
   }, [dispatch]);
 
   // get patient details

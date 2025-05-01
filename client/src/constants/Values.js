@@ -1,8 +1,29 @@
-export const APPOINTMENT_CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
-export const UPLOAD_CONTRACT_ADDRESS = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
-export const PATIENT_CONTRACT_ADDRESS = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
-export const DOCTOR_CONTRACT_ADDRESS = "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
-export const PRIVATE_KEY = "0xde9be858da4a475276426320d5e9262ecfc3ba460bfac56360bfa6c4c28b4ee0"
+export const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT;
+
+export const APPOINTMENT_CONTRACT_ADDRESS =
+  import.meta.env.VITE_ENVIRONMENT === "development"
+    ? "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+    : import.meta.env.VITE_APPOINTMENT_CONTRACT_ADDRESS;
+
+export const UPLOAD_CONTRACT_ADDRESS =
+  import.meta.env.VITE_ENVIRONMENT === "development"
+    ? "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+    : import.meta.env.VITE_UPLOAD_CONTRACT_ADDRESS;
+
+export const PATIENT_CONTRACT_ADDRESS =
+  import.meta.env.VITE_ENVIRONMENT === "development"
+    ? "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
+    : import.meta.env.VITE_PATIENT_CONTRACT_ADDRESS;
+
+export const DOCTOR_CONTRACT_ADDRESS =
+  import.meta.env.VITE_ENVIRONMENT === "development"
+    ? "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
+    : import.meta.env.VITE_DOCTOR_CONTRACT_ADDRESS;
+
+export const PRIVATE_KEY =
+  import.meta.env.VITE_ENVIRONMENT === "development"
+    ? "0xde9be858da4a475276426320d5e9262ecfc3ba460bfac56360bfa6c4c28b4ee0"
+    : import.meta.env.VITE_PRIVATE_KEY;
 
 // Account #13: 0x1CBd3b2770909D4e10f157cABC84C7264073C9Ec (10000 ETH)
 // Private Key: 0x47c99abed3324a2707c28affff1267e45918ec8c3f20b8aa892e8b065d2942dd
@@ -24,4 +45,3 @@ export const PRIVATE_KEY = "0xde9be858da4a475276426320d5e9262ecfc3ba460bfac56360
 
 // Account #19: 0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199 (10000 ETH)
 // Private Key: 0xdf57089febbacf7ba0bc227dafbffa9fc08a93fdc68e1e42411a14efcf23656e
-

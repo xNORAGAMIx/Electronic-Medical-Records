@@ -34,7 +34,7 @@ const Hospital = () => {
 
   // connect to network
   useEffect(() => {
-    dispatch(connectToDoctor(privateKey, contractAddress, contractABI));
+    dispatch(connectToDoctor(contractAddress, contractABI));
   }, [dispatch]);
 
   // clear state when component unmounts

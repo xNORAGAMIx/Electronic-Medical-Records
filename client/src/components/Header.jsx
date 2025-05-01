@@ -163,12 +163,25 @@ const Header = () => {
                   )}
                 </li>
                 <li>
+                  {licenseNumber ? (
+                    <Link
+                      to={`/generate-pdf`}
+                      className="hover:text-cyan-300 transition duration-300 flex items-center gap-x-2"
+                    >
+                      <FiCalendar className="space-x-7 text-lg" />
+                      Generate PDF &nbsp; &nbsp;
+                    </Link>
+                  ) : (
+                    <></>
+                  )}
+                </li>
+                <li>
                   <button
                     onClick={() => {
                       handleLogout();
                       setMenuOpen(false);
                     }}
-                    className="cursor-pointer flex items-center gap-2 bg-rose-500 px-5 py-2 rounded-md hover:bg-rose-600 transition duration-300 shadow"
+                    className="cursor-pointer flex items-center -ml-8 gap-2 bg-rose-500 px-5 py-2 rounded-md hover:bg-rose-600 transition duration-300 shadow"
                   >
                     <FiLogOut className="text-lg " />
                     Logout

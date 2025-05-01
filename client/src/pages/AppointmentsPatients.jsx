@@ -70,12 +70,12 @@ const Appointments = () => {
 
   // connect to network
   useEffect(() => {
-    dispatch(connectToAppoint(privateKey, contractAddress, contractAbi));
+    dispatch(connectToAppoint(contractAddress, contractAbi));
     dispatch(
-      connectToDoctor(privateKey, doctorContractAddress, doctorContractAbi)
+      connectToDoctor(doctorContractAddress, doctorContractAbi)
     );
     dispatch(
-      connectToUpload(privateKey, uploadContractAddress, uploadContractAbi)
+      connectToUpload(uploadContractAddress, uploadContractAbi)
     );
   }, [dispatch]);
 

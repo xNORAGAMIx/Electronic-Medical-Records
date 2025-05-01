@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ethers } from "ethers";
+import { initializeContractCreationMetaMask } from "../../utils/RpcControllerMetaMask";
 
 const initialState = {
   contract: null,
@@ -30,21 +30,37 @@ const appointmentSlice = createSlice({
 export const { setAppointmentState, clearAppointementState } =
   appointmentSlice.actions;
 
-  export const connectToAppoint =
-  (privateKey, contractAddress, contractABI) => async (dispatch) => {
+// export const connectToAppoint =
+//   (privateKey, contractAddress, contractABI) => async (dispatch) => {
+//     try {
+//       const { provider, wallet, contract } = await initializeContractCreation(
+//         privateKey,
+//         contractAddress,
+//         contractABI
+//       );
+
+//       dispatch(
+//         setAppointmentState({
+//           contract,
+//           account: wallet.address,
+//           provider,
+//         })
+//       );
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
+
+export const connectToAppoint =
+  (contractAddress, contractABI) => async (dispatch) => {
     try {
-      const provider = new ethers.JsonRpcProvider("http://127.0.0.1:8545");
-      const wallet = new ethers.Wallet(privateKey, provider);
-      const contract = new ethers.Contract(
-        contractAddress,
-        contractABI,
-        wallet
-      );
+      const { provider, contract, account } =
+        await initializeContractCreationMetaMask(contractAddress, contractABI);
 
       dispatch(
         setAppointmentState({
           contract,
-          account: wallet.address,
+          account,
           provider,
         })
       );
@@ -53,4 +69,4 @@ export const { setAppointmentState, clearAppointementState } =
     }
   };
 
-  export default appointmentSlice.reducer;
+export default appointmentSlice.reducer;

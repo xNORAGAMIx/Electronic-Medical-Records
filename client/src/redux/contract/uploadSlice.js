@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ethers } from "ethers";
+import { initializeContractCreationMetaMask } from "../../utils/RpcControllerMetaMask";
 
 const initialState = {
   contract: null,
@@ -29,21 +29,37 @@ const uploadSlice = createSlice({
 
 export const { setUploadState, clearUploadState } = uploadSlice.actions;
 
+// export const connectToUpload =
+//   (privateKey, contractAddress, contractABI) => async (dispatch) => {
+//     try {
+//       const { provider, wallet, contract } = await initializeContractCreation(
+//         privateKey,
+//         contractAddress,
+//         contractABI
+//       );
+
+//       dispatch(
+//         setUploadState({
+//           contract,
+//           account: wallet.address,
+//           provider,
+//         })
+//       );
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
+
 export const connectToUpload =
-  (privateKey, contractAddress, contractABI) => async (dispatch) => {
+  (contractAddress, contractABI) => async (dispatch) => {
     try {
-      const provider = new ethers.JsonRpcProvider("http://127.0.0.1:8545");
-      const wallet = new ethers.Wallet(privateKey, provider);
-      const contract = new ethers.Contract(
-        contractAddress,
-        contractABI,
-        wallet
-      );
+      const { provider, contract, account } =
+        await initializeContractCreationMetaMask(contractAddress, contractABI);
 
       dispatch(
         setUploadState({
           contract,
-          account: wallet.address,
+          account,
           provider,
         })
       );

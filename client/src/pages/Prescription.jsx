@@ -28,7 +28,7 @@ const Prescription = () => {
 
   // connect to network
   useEffect(() => {
-    dispatch(connectToUpload(privateKey, contractAddress, contractABI));
+    dispatch(connectToUpload(contractAddress, contractABI));
   }, [dispatch]);
 
   // get doctor uploaded prespcription

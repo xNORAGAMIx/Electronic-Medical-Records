@@ -52,9 +52,9 @@ const Prescribe = () => {
 
   // connect to network
   useEffect(() => {
-    dispatch(connectToBlockchain(privateKey, contractAddress, contractABI));
+    dispatch(connectToBlockchain( contractAddress, contractABI));
     dispatch(
-      connectToUpload(privateKey, uploadContractAddress, uploadContractABI)
+      connectToUpload(uploadContractAddress, uploadContractABI)
     );
   }, [dispatch]);
 

@@ -44,7 +44,7 @@ const Login = () => {
   //coonect to network
   useEffect(() => {
     if (!account) {
-      dispatch(connectToBlockchain(privateKey, contractAddress, contractABI));
+      dispatch(connectToBlockchain(contractAddress, contractABI));
     }
   }, [dispatch, account]);
 

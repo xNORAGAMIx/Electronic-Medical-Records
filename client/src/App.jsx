@@ -30,6 +30,7 @@ import Footer from "./components/Footer";
 import Contact from "./components/Contact";
 import Services from "./components/Services";
 import About from "./components/About";
+import Generate from "./components/Generate";
 
 
 const App = () => {
@@ -96,6 +97,14 @@ const App = () => {
           element={
             <PrivateRoute>
               <Prescribe />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/generate-pdf"
+          element={
+            <PrivateRoute>
+              <Generate />
             </PrivateRoute>
           }
         />

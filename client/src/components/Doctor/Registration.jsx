@@ -69,14 +69,8 @@ const Registration = () => {
 
   // connect to network
   useEffect(() => {
-    dispatch(connectToDoctor(privateKey, contractAddress, contractABI));
-    dispatch(
-      connectToBlockchain(
-        privateKey,
-        patientContractAddress,
-        patientContractABI
-      )
-    );
+    dispatch(connectToDoctor(contractAddress, contractABI));
+    dispatch(connectToBlockchain(patientContractAddress, patientContractABI));
   }, [dispatch]);
 
   // clear state when component unmounts

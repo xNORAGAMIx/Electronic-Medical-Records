@@ -48,8 +48,8 @@ const AppointmentDoctor = () => {
 
   // connect to network
   useEffect(() => {
-    dispatch(connectToAppoint(privateKey, contractAddress, contractABI));
-    dispatch(connectToBlockchain(privateKey, patientContractAddress, patientContractABI));
+    dispatch(connectToAppoint(contractAddress, contractABI));
+    dispatch(connectToBlockchain(patientContractAddress, patientContractABI));
   }, [dispatch]);
 
   // clear state on component unmount

@@ -41,7 +41,7 @@ const Dashboard = () => {
 
   // connect to network
   useEffect(() => {
-    dispatch(connectToDoctor(privateKey, contractAddress, contractABI));
+    dispatch(connectToDoctor(contractAddress, contractABI));
   }, [dispatch]);
 
   // deny unauthorized access
