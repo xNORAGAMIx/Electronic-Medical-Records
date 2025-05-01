@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaShieldAlt, FaLock, FaArrowRight } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 // redux (Patient + User)
 import { connectToBlockchain } from "../../redux/contract/blockchainSlice";
@@ -45,19 +46,19 @@ const Login = () => {
 
     // contract not loaded yet
     if (!contract) {
-      alert(
+      toast.error(
         "Blockchain contract is not available yet. Please try again later."
       );
       return;
     }
 
     if (!hhNumber.trim() || !password.trim()) {
-      alert("Please fill out all fields");
+      toast.error("Please fill out all fields");
       return;
     }
 
     if (!/^\d+$/.test(hhNumber)) {
-      alert("Security Number must be numeric");
+      toast.error("Security Number must be numeric");
       return;
     }
     try {
@@ -74,13 +75,13 @@ const Login = () => {
         );
 
         if (!isValidAddress) {
-          alert("Unauthorized access");
+          toast.error("Unauthorized access");
           return;
         }
 
         //validate password
         if (!isValidPass) {
-          alert("Incorrect password!");
+          toast.error("Incorrect password!");
         } else {
           // setup user login state
           dispatch(setUser({ account, hhNumber }));
@@ -88,18 +89,18 @@ const Login = () => {
           //save user data to local storage
           localStorage.setItem("walletAddress", account);
           localStorage.setItem("hhNumber", hhNumber);
-          alert("Login successfull!");
+          toast.success("Login successfull!");
 
           // redirect to user profile
           navigate("/patient/" + hhNumber);
         }
       } else {
-        alert("You need to register first!");
+        toast.error("You need to register first!");
         return;
       }
     } catch (err) {
       console.log(err);
-      alert("Login error!");
+      toast.error("Login error!");
     }
   };
 

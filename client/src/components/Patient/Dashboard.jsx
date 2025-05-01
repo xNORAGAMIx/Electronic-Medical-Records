@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 import {
   FaShieldAlt,
   FaLock,
@@ -127,7 +128,7 @@ const Dashboard = () => {
       }
 
       if (!response || Object.keys(response).length === 0) {
-        alert("No file to display");
+        toast.error("No file to display");
         return;
       }
 
@@ -163,7 +164,7 @@ const Dashboard = () => {
         });
         setReports(images);
       } else {
-        alert("No file to display");
+        toast.error("No file to display");
       }
     };
     getData();
@@ -196,15 +197,15 @@ const Dashboard = () => {
         }
 
         uploadContract.add(account, imgHash);
-        alert("Image uploaded successfully");
+        toast.success("Image uploaded successfully");
         setFileName("no file selected");
         setFile(null);
       } catch (err) {
-        alert("Unable to connect to pinata");
+        toast.error("Unable to connect to pinata");
         console.log(err);
       }
     }
-    alert("File uploaded successfully");
+    toast.success("File uploaded successfully");
     setFileName("No file selected");
     setFile(null);
   };
@@ -223,7 +224,14 @@ const Dashboard = () => {
 
   // contract loading
   if (loading) {
-    return <div>Loading blockchain connection...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+        <p className="text-lg font-medium ml-4">
+          Connecting to the blockchain...
+        </p>
+      </div>
+    );
   }
 
   // fetch access list
