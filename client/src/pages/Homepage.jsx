@@ -43,10 +43,10 @@ const HomePage = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <Link
-              to="/register"
+              to="/login"
               className="inline-flex items-center bg-cyan-400 hover:bg-cyan-500 text-[#0a0f2c] px-8 py-4 rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl"
             >
-              Get Started <FiArrowRight className="ml-2" />
+              Sign in <FiArrowRight className="ml-2" />
             </Link>
           </motion.div>
         </div>

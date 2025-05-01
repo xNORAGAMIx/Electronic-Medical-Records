@@ -20,10 +20,12 @@ const Header = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // redux states
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const hhNumber = useSelector((state) => state.user.hhNumber);
   const licenseNumber = useSelector((state) => state.user.licenseNumber);
 
+  // logout 
   const handleLogout = () => {
     dispatch(clearUser());
     localStorage.clear();
@@ -116,7 +118,7 @@ const Header = () => {
                     className="flex items-center gap-2 bg-cyan-400 text-black px-5 py-2 rounded-md hover:bg-cyan-500 transition duration-300 shadow"
                   >
                     <FiUserPlus className="text-lg" />
-                    Get Started
+                    Sign Up
                   </Link>
                 </li>
               </>

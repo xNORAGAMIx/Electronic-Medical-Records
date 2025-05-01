@@ -7,6 +7,7 @@ const PrivateRoute = ({ children }) => {
     const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
     const [loading, setLoading] = useState(true);
   
+    // authorization check
     useEffect(() => {
       if (!isLoggedIn) {
         navigate("/patient-login", { replace: true });

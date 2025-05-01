@@ -1,10 +1,8 @@
 import {
-  FaFacebookF,
-  FaTwitter,
-  FaLinkedinIn,
   FaEnvelope,
   FaPhoneAlt,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -23,19 +21,19 @@ const Footer = () => {
           <h3 className="text-2xl font-bold mb-4 text-cyan-300">Links</h3>
           <ul className="text-gray-400 space-y-2">
             <li>
-              <a href="#" className="hover:text-cyan-300 transition">
+              <Link to="/" className="hover:text-cyan-300 transition">
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:text-cyan-300 transition">
-                Features
-              </a>
+              <Link to="/services" className="hover:text-cyan-300 transition">
+                Services
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:text-cyan-300 transition">
+              <Link to="/contact" className="hover:text-cyan-300 transition">
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -45,8 +43,11 @@ const Footer = () => {
           <h3 className="text-2xl font-bold mb-4 text-cyan-300">Contact</h3>
           <p className="flex items-center justify-center md:justify-start gap-2 text-gray-400">
             <FaEnvelope className="text-cyan-300" />
-            <a href="mailto:2320403107@stu.manit.ac.in" className="hover:underline">
-            Manas Das
+            <a
+              href="mailto:2320403107@stu.manit.ac.in"
+              className="hover:underline"
+            >
+              Manas Das
             </a>
           </p>
           <p className="flex items-center justify-center md:justify-start gap-2 text-gray-400">
@@ -64,28 +65,6 @@ const Footer = () => {
               +91 *****2610
             </a>
           </p>
-
-          {/* Social Media Icons */}
-          <div className="flex justify-center md:justify-start gap-4 mt-4">
-            <a
-              href="#"
-              className="text-gray-400 hover:text-cyan-300 transition"
-            >
-              <FaFacebookF />
-            </a>
-            <a
-              href="#"
-              className="text-gray-400 hover:text-cyan-300 transition"
-            >
-              <FaTwitter />
-            </a>
-            <a
-              href="#"
-              className="text-gray-400 hover:text-cyan-300 transition"
-            >
-              <FaLinkedinIn />
-            </a>
-          </div>
         </div>
       </div>
 

@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState, useRef } from "react";
+import { useState } from "react";
 import {
   Syringe,
   User,
@@ -26,9 +26,11 @@ import {
 } from "@react-pdf/renderer";
 
 const Generate = () => {
+  // form states
   const [patientAddress, setPatientAddress] = useState("");
   const [remarks, setRemarks] = useState("");
 
+  // redux states
   const { account } = useSelector((state) => state.user);
 
   return (
@@ -49,7 +51,7 @@ const Generate = () => {
             {/* Header Section */}
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
               <div className="flex items-center">
-                <div className="p-3 rounded-full bg-red-50 mr-4">
+                <div className="p-3 rounded-full bg-cyan-50 mr-4">
                   <Stethoscope className="w-6 h-6 text-cyan-600" />
                 </div>
                 <div>
@@ -91,7 +93,7 @@ const Generate = () => {
                 </label>
                 <div className="relative">
                   <div className="absolute top-3 left-3 flex items-start pointer-events-none">
-                    <Syringe  className="h-5 w-5 text-gray-400 mt-1" />
+                    <Syringe className="h-5 w-5 text-gray-400 mt-1" />
                   </div>
                   <textarea
                     value={remarks}
@@ -230,7 +232,7 @@ const Generate = () => {
                         />
                       }
                       fileName="prescription.pdf"
-                      className="flex items-center text-sm bg-white border border-cyan-300 text-cyan-600 px-4 py-2 rounded-lg hover:bg-red-50 transition"
+                      className="flex items-center text-sm bg-white border border-cyan-300 text-cyan-600 px-4 py-2 rounded-lg hover:bg-cyan-50 transition"
                     >
                       Download &nbsp; <Printer className="w-4 h-4 mr-2" />
                     </PDFDownloadLink>
@@ -254,11 +256,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   container: {
-    border: "2px solid #fecaca",
+    border: "2px solid #a5f3fc",
     borderRadius: 8,
     padding: 30,
     position: "relative",
-    backgroundColor: "#fff5f5",
+    backgroundColor: "#ecfeff",
   },
   watermark: {
     position: "absolute",
@@ -274,7 +276,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#dc2626",
+    color: "#4b5563",
     textTransform: "uppercase",
     marginBottom: 8,
   },
@@ -287,7 +289,7 @@ const styles = StyleSheet.create({
   divider: {
     width: 96,
     height: 2,
-    backgroundColor: "#fca5a5",
+    backgroundColor: "#67e8f9",
     marginHorizontal: "auto",
     borderRadius: 2,
   },
@@ -355,9 +357,7 @@ const CertificatePDF = ({ patientAddress, remarks, account }) => (
 
         <View style={styles.header}>
           <Text style={styles.title}>Presciption</Text>
-          <Text style={styles.subtitle}>
-            Presented in recognition of your life-saving blood donation
-          </Text>
+          <Text style={styles.subtitle}>Valid only for 24HRS to pharmacy</Text>
           <View style={styles.divider} />
         </View>
 
